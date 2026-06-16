@@ -1,0 +1,20 @@
+.github/workflows/ci.yml
+  s_fc1231bf4cada5::t_f6271ab0736095 14-15
+  s_fc1231bf4cada5::t_1613d1315e70fd 17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "bfb60a0bd8e61fe27668fb95a46aa30b251597dc",
+  "prompts": {},
+  "sessions": {
+    "s_fc1231bf4cada5": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "ec54db4e-4979-45aa-b57c-43d984f8f3a3",
+        "model": "default"
+      },
+      "human_author": "lixiuwei <lixiuwei1121@gmail.com>"
+    }
+  }
+}
