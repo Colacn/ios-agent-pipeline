@@ -1,0 +1,27 @@
+CHANGELOG.md
+  s_fc1231bf4cada5::t_4923ecab9868bc 9,13,15,21
+docs/SESSION-HANDOFF.md
+  s_fc1231bf4cada5::t_37e012e9fadf86 208
+  s_fc1231bf4cada5::t_d779ea029118f0 42,44-46
+  s_fc1231bf4cada5::t_059700bb3fab20 60
+  s_fc1231bf4cada5::t_bb428131234560 59
+  s_fc1231bf4cada5::t_d984df5df7a65d 169
+  s_fc1231bf4cada5::t_2f22f50f9f2fe3 150-151
+  s_fc1231bf4cada5::t_e7574de3be62be 61
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "363cff153db4ab69c63a7b65299fa51c962ad39d",
+  "prompts": {},
+  "sessions": {
+    "s_fc1231bf4cada5": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "ec54db4e-4979-45aa-b57c-43d984f8f3a3",
+        "model": "default"
+      },
+      "human_author": "lixiuwei <lixiuwei1121@gmail.com>"
+    }
+  }
+}
