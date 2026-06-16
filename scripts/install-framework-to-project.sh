@@ -8,6 +8,10 @@
 #   默认：cursor
 #
 # options:
+#   --bundle          安装整包（默认；显式指定时可覆盖先前的 --skill）
+#   --skill NAME      仅安装指定 skill + 最小共享 bundle（可重复）
+#   --skills A,B,C    同 --skill，逗号分隔
+#   --list-skills     列出可安装的 pipeline skill 并退出
 #   --init-agents     若不存在则从 templates/project/AGENTS.md.example 生成 AGENTS.md
 #   --overlay NAME    安装 project-overlays/NAME 到业务仓 project-overlays/NAME
 #   --check           安装后执行 scripts/smoke-test.sh
@@ -22,6 +26,8 @@ set -euo pipefail
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 default_src="$(cd "$script_dir/.." && pwd)"
 FRAMEWORK_SRC="${FRAMEWORK_SRC:-$default_src}"
+# shellcheck source=scripts/lib/skill-install.sh
+source "$script_dir/lib/skill-install.sh"
 
 project_root="$(pwd)"
 INIT_AGENTS=0
@@ -29,6 +35,8 @@ RUN_CHECK=0
 DRY_RUN=0
 OVERLAYS=()
 targets=()
+INSTALL_MODE=bundle
+SELECTED_SKILLS=()
 
 usage() {
   cat <<EOF
@@ -36,19 +44,55 @@ usage() {
 
 target: cursor | claude | codex | neutral | all  （默认 cursor）
 
+安装范围:
+  （默认）            整包：全部 skills + agents + references + scripts + templates + rules
+  --skill NAME        单个或多个 skill + 最小共享 bundle（references/scripts/templates + 对应 agent）
+  --skills A,B,C      同 --skill，逗号分隔
+  --bundle            显式整包（覆盖 --skill）
+  --list-skills       列出 pipeline skill 名称
+
 options:
   --init-agents       从模板生成 AGENTS.md（已存在则跳过）
   --overlay NAME      安装 project-overlays/NAME
   --check             安装后跑 smoke-test.sh
   --dry-run           预览，不写入
+
+单 skill 快捷入口: scripts/install-skill.sh analyze [target...]
 EOF
 }
+
+if [[ "${1:-}" == "--list-skills" ]]; then
+  list_pipeline_skills "$FRAMEWORK_SRC"
+  exit 0
+fi
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --init-agents) INIT_AGENTS=1; shift ;;
     --check) RUN_CHECK=1; shift ;;
     --dry-run) DRY_RUN=1; shift ;;
+    --bundle)
+      INSTALL_MODE=bundle
+      SELECTED_SKILLS=()
+      shift
+      ;;
+    --skill)
+      INSTALL_MODE=skills
+      validate_skill_name "${2:?--skill 需要名称}" "$FRAMEWORK_SRC"
+      append_unique_skill "$2"
+      shift 2
+      ;;
+    --skills)
+      INSTALL_MODE=skills
+      IFS=',' read -r -a _skill_csv <<<"${2:?--skills 需要逗号分隔列表}"
+      for _s in "${_skill_csv[@]}"; do
+        _s="${_s// /}"
+        [[ -z "$_s" ]] && continue
+        validate_skill_name "$_s" "$FRAMEWORK_SRC"
+        append_unique_skill "$_s"
+      done
+      shift 2
+      ;;
     --overlay)
       OVERLAYS+=("${2:?--overlay 需要名称}")
       shift 2
@@ -97,6 +141,15 @@ copy_tree() {
   fi
 }
 
+copy_file() {
+  local src="$1" dest="$2"
+  [[ -f "$src" ]] || return 0
+  log_action "copy: $src -> $dest"
+  [[ $DRY_RUN -eq 1 ]] && return 0
+  mkdir -p "$(dirname "$dest")"
+  cp "$src" "$dest"
+}
+
 merge_component() {
   local component="$1" dest_root="$2"
   local src_path="$FRAMEWORK_SRC/$component"
@@ -104,22 +157,60 @@ merge_component() {
   copy_tree "$src_path" "$dest_root/$component"
 }
 
+install_shared_bundle() {
+  local dest_root="$1"
+  merge_component references "$dest_root"
+  merge_component scripts "$dest_root"
+  merge_component templates "$dest_root"
+}
+
+install_selected_skills() {
+  local dest_root="$1"
+  local skill agent
+  [[ $DRY_RUN -eq 0 ]] && mkdir -p "$dest_root/skills" "$dest_root/agents"
+  for skill in "${SELECTED_SKILLS[@]}"; do
+    copy_tree "$FRAMEWORK_SRC/skills/$skill" "$dest_root/skills/$skill"
+    agent="$(skill_to_agent "$skill")"
+    copy_file "$FRAMEWORK_SRC/agents/${agent}.md" "$dest_root/agents/${agent}.md"
+  done
+}
+
+install_manifest() {
+  local dest_root="$1"
+  if [[ ! -f "$FRAMEWORK_SRC/framework.manifest.json" ]]; then
+    return 0
+  fi
+  log_action "copy manifest -> $dest_root/framework.manifest.json"
+  [[ $DRY_RUN -eq 1 ]] && return 0
+  cp "$FRAMEWORK_SRC/framework.manifest.json" "$dest_root/framework.manifest.json"
+}
+
+chmod_installed_scripts() {
+  local dest_root="$1"
+  [[ $DRY_RUN -eq 1 ]] && return 0
+  chmod +x "$dest_root/scripts/"*.sh 2>/dev/null || true
+  chmod +x "$dest_root/scripts/lib/"*.sh 2>/dev/null || true
+}
+
 install_to_dir() {
   local dest_root="$1"
   local label="$2"
   log_action "==> 安装到 ${label}: ${dest_root}"
   [[ $DRY_RUN -eq 0 ]] && mkdir -p "$dest_root"
-  for c in skills agents references scripts templates rules; do
-    merge_component "$c" "$dest_root"
-  done
-  if [[ -f "$FRAMEWORK_SRC/framework.manifest.json" ]]; then
-    log_action "copy manifest -> $dest_root/framework.manifest.json"
-    [[ $DRY_RUN -eq 0 ]] && cp "$FRAMEWORK_SRC/framework.manifest.json" "$dest_root/framework.manifest.json"
+
+  if [[ "$INSTALL_MODE" == "bundle" ]]; then
+    log_action "    模式: 整包（全部 skills + rules）"
+    for c in skills agents references scripts templates rules; do
+      merge_component "$c" "$dest_root"
+    done
+  else
+    log_action "    模式: 选定 skills（${SELECTED_SKILLS[*]}）+ 共享 bundle"
+    install_selected_skills "$dest_root"
+    install_shared_bundle "$dest_root"
   fi
-  if [[ $DRY_RUN -eq 0 ]]; then
-    chmod +x "$dest_root/scripts/"*.sh 2>/dev/null || true
-    chmod +x "$dest_root/scripts/lib/"*.sh 2>/dev/null || true
-  fi
+
+  install_manifest "$dest_root"
+  chmod_installed_scripts "$dest_root"
 }
 
 resolve_overlay_src() {
@@ -198,6 +289,15 @@ install_global_skills() {
   log_action "==> 全局 skills (${label}): ${global_base}"
   [[ $DRY_RUN -eq 1 ]] && return 0
   mkdir -p "$global_base"
+
+  if [[ "$INSTALL_MODE" == "skills" ]]; then
+    local skill
+    for skill in "${SELECTED_SKILLS[@]}"; do
+      copy_tree "$FRAMEWORK_SRC/skills/$skill" "$global_base/$skill"
+    done
+    return 0
+  fi
+
   local skill_dir
   for skill_dir in "$FRAMEWORK_SRC/skills"/*; do
     [[ -d "$skill_dir" && -f "$skill_dir/SKILL.md" ]] || continue
@@ -257,10 +357,18 @@ fi
 
 if [[ $DRY_RUN -eq 0 ]]; then
   echo ""
-  echo "安装完成。验证示例（Cursor 落盘为 .cursor/ 时）："
-  echo "  bash .cursor/scripts/bootstrap-run.sh smoke-test"
-  echo "  bash .cursor/scripts/check-run.sh smoke-test"
-  echo "  bash .cursor/scripts/reconcile-check.sh <slug>   # develop 出口后"
+  if [[ "$INSTALL_MODE" == "skills" ]]; then
+    echo "安装完成（skill 模式: ${SELECTED_SKILLS[*]}）。验证示例："
+    echo "  bash .cursor/scripts/bootstrap-run.sh smoke-test"
+    echo "  bash .cursor/scripts/check-run.sh smoke-test"
+    echo "补装其他阶段: bash .cursor/scripts/install-skill.sh plan review"
+    echo "整包升级: bash .cursor/scripts/install-framework-to-project.sh cursor --bundle"
+  else
+    echo "安装完成（整包）。验证示例（Cursor 落盘为 .cursor/ 时）："
+    echo "  bash .cursor/scripts/bootstrap-run.sh smoke-test"
+    echo "  bash .cursor/scripts/check-run.sh smoke-test"
+    echo "  bash .cursor/scripts/reconcile-check.sh <slug>   # develop 出口后"
+  fi
   echo "详见 references/guide/cross-platform-deployment.md"
 fi
 

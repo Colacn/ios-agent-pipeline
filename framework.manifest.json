@@ -1,6 +1,6 @@
 {
   "name": "ios-agent-pipeline",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "IDE-agnostic document-driven agent pipeline: analyze → plan → review → develop → test. Portable skills + references + scripts + templates.",
   "license": "MIT",
   "components": {
@@ -43,10 +43,26 @@
       "notes": "Portable layout for git clone / skills.sh / custom IDE adapters"
     }
   },
+  "skillInstall": {
+    "agentMap": {
+      "analyze": "analyst",
+      "plan": "planner",
+      "review": "reviewer",
+      "develop": "developer",
+      "test": "tester"
+    },
+    "sharedBundle": ["references", "scripts", "templates"],
+    "bundleOnly": ["rules"],
+    "scripts": {
+      "installSkill": "scripts/install-skill.sh",
+      "installBundle": "scripts/install-framework-to-project.sh"
+    }
+  },
   "distribution": {
     "skillsSh": "https://skills.sh/",
     "cursorMarketplace": "https://cursor.com/marketplace/publish",
     "exportScript": "scripts/export-distribution-layout.sh",
-    "installScript": "scripts/install-framework-to-project.sh"
+    "installScript": "scripts/install-framework-to-project.sh",
+    "installSkillScript": "scripts/install-skill.sh"
   }
 }

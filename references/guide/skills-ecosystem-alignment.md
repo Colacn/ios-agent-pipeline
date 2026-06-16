@@ -41,10 +41,11 @@ ios-agent-pipeline/
 
 | 方式 | 得到什么 | 适用 |
 |------|----------|------|
-| `npx skills add …@analyze` | 单个 skill 目录 | 发现、轻量试用 |
-| `install-framework-to-project.sh` | skills + references + scripts + templates + agents | **完整流水线** |
+| `install-skill.sh analyze` | 单个 skill + 对应 agent + references/scripts/templates | **skills.sh 风格单阶段部署** |
+| `install-framework-to-project.sh` | 全部 skills + agents + rules + 共享 bundle | **完整流水线** |
+| `npx skills add …@analyze` | 通常仅 skill 目录 | 发现、全局 skills；需另装 bundle |
 
-单 skill 安装**不会**带上 `references/workflow/pipeline.md` 等公共规则 → 完整产研仍推荐 Git clone + install。
+单 skill 安装通过 `install-skill.sh`（或 `install-framework-to-project.sh --skill NAME`）**会**带上 `references/workflow/pipeline.md` 等公共规则与 `scripts/`；多次安装会合并到同一 `.cursor/` 目录。
 
 ##  authoring 建议（对齐热门 skill）
 

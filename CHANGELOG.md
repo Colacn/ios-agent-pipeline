@@ -2,6 +2,21 @@
 
 本仓库遵循 [Semantic Versioning](https://semver.org/)。
 
+## [0.4.0] - 2026-06-16
+
+### Added
+
+- **单 skill 部署**：`scripts/install-skill.sh` 与 `install-framework-to-project.sh --skill/--skills`。
+- 单 skill 模式自动安装共享 bundle（`references/`、`scripts/`、`templates/`）及对应 agent。
+- `scripts/lib/skill-install.sh`：skill 校验与 agent 映射。
+- `framework.manifest.json` → `skillInstall` 元数据。
+- smoke-test 增加单 skill 安装用例。
+
+### Changed
+
+- 整包安装仍为默认；`--bundle` 可显式覆盖 `--skill`。
+- README / distribution / skills-ecosystem-alignment 文档对齐新安装方式。
+
 ## [0.3.2] - 2026-06-16
 
 ### Removed

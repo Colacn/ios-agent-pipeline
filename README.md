@@ -23,6 +23,13 @@ bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project.sh cursor --in
 # 业务 overlay 在业务仓自建 project-overlays/ 后：--overlay <name>
 ```
 
+**只装某一阶段**（含 references/scripts/templates 共享 bundle，与 skills.sh 单 skill 体验一致）：
+
+```bash
+bash /tmp/ios-agent-pipeline/scripts/install-skill.sh analyze cursor
+bash /tmp/ios-agent-pipeline/scripts/install-skill.sh analyze plan develop cursor
+```
+
 Install for multiple IDEs at once:
 
 ```bash
@@ -54,16 +61,27 @@ bash scripts/smoke-test.sh   # 框架仓：repo_root + 安装布局冒烟
 | `codex` | `.codex/agent-workflow/` | `AGENTS.md` |
 | `neutral` | `agent-workflow/` | `AGENTS.md` |
 
-## skills.sh
+## skills.sh / 单 skill 安装
 
-Browse [skills.sh](https://skills.sh/). Per-stage install (after this repo is published):
+Browse [skills.sh](https://skills.sh/). 两种方式：
+
+| 方式 | 命令 | 得到什么 |
+|------|------|----------|
+| **本仓 install-skill** | `bash …/scripts/install-skill.sh analyze cursor` | skill + agent + references/scripts/templates |
+| **skills.sh 生态** | `npx skills add Colacn/ios-agent-pipeline@analyze` | 通常仅 skill 目录；需另装共享 bundle |
+| **整包** | `install-framework-to-project.sh cursor` | 全部 skills + agents + rules |
 
 ```bash
+# 推荐：单阶段 + 可运行共享 bundle
+bash /tmp/ios-agent-pipeline/scripts/install-skill.sh analyze cursor
+
+# 或 skills.sh（发现/全局 skills 目录）
 npx skills add Colacn/ios-agent-pipeline@analyze
 npx skills add Colacn/ios-agent-pipeline@plan
-```
 
-For `references/`, `scripts/`, and `templates/`, use the full Git install above.
+# 整包
+bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project.sh cursor
+```
 
 ## Repository layout
 

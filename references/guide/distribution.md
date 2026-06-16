@@ -6,8 +6,9 @@
 
 | 通道 | 典型命令 / 入口 | 安装内容 | 适用 |
 |------|-----------------|----------|------|
-| **Git + 安装脚本** | `install-framework-to-project.sh` | skills + agents + references + scripts + templates | **全功能首选** |
-| **skills.sh** | `npx skills add <owner/repo>@analyze` | 通常单个 Skill 目录 | 按阶段发现、轻量安装 |
+| **Git + install-skill** | `install-skill.sh analyze cursor` | 单个 skill + agent + references/scripts/templates | **按阶段试用/渐进安装** |
+| **Git + 安装脚本** | `install-framework-to-project.sh` | skills + agents + references + scripts + templates + rules | **全功能整包** |
+| **skills.sh** | `npx skills add <owner/repo>@analyze` | 通常单个 Skill 目录 | 发现、全局 skills 目录 |
 | **中立目录** | `install-framework-to-project.sh neutral` | `agent-workflow/` | Codex / 自定义 IDE 适配 |
 | **Cursor Marketplace** | IDE 内 Marketplace | skills + agents + rules（需再跑落地脚本） | Cursor 用户发现 |
 
@@ -50,13 +51,16 @@ npx skills add your-org/ios-agent-pipeline@plan -g -y
 ```
 
 - 发布要求：公开 Git 仓，`skills/<name>/SKILL.md` 符合 [Agent Skills 开放格式](https://skills.sh/)
-- **限制**：agents、references、scripts 不会随 `@analyze` 自动进项目 → 用户仍需 clone 整包或跑 `install-framework-to-project.sh`
+- **限制**：agents、references、scripts 不会随 `@analyze` 自动进项目
+- **本仓补齐**：`install-skill.sh analyze` 会一并安装共享 bundle 与对应 agent
 
-**建议**：skills.sh 提供五个 `@skill` 入口；README 指向整包安装命令。
+**建议**：skills.sh 提供五个 `@skill` 入口；README 同时指向 `install-skill.sh`（单阶段 + bundle）与 `install-framework-to-project.sh`（整包）。
 
 ---
 
-## 通道 B：Git 分发包（全功能）
+## 通道 B：Git 分发包
+
+**整包（默认）**
 
 ```bash
 git clone https://github.com/your-org/ios-agent-pipeline.git
@@ -64,7 +68,14 @@ cd your-ios-app
 bash /path/to/ios-agent-pipeline/scripts/install-framework-to-project.sh all
 ```
 
-支持 `cursor` | `claude` | `codex` | `neutral` | `all`。
+**单 skill + 共享 bundle**
+
+```bash
+bash /path/to/ios-agent-pipeline/scripts/install-skill.sh analyze cursor
+bash /path/to/ios-agent-pipeline/scripts/install-skill.sh analyze plan develop cursor --init-agents
+```
+
+支持 `cursor` | `claude` | `codex` | `neutral` | `all`；`--skill` / `--skills` 也可直接写在 `install-framework-to-project.sh` 上。
 
 ---
 

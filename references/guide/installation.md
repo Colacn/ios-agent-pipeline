@@ -23,9 +23,10 @@ cd your-app && bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project
 
 | 方式 | 适用 |
 |------|------|
-| `install-framework-to-project.sh` | **推荐**；支持 cursor / claude / codex / neutral |
+| `install-framework-to-project.sh` | **推荐**；整包或 `--skill` 子集 |
+| `install-skill.sh analyze …` | **单阶段 + 共享 bundle**（skills.sh 风格） |
 | 复制 `.cursor/` 目录 | 仅 Cursor 或已熟悉结构时 |
-| `npx skills add ...@analyze` | 单 Skill；需另装 references/scripts |
+| `npx skills add ...@analyze` | 仅 skill 目录；需 `install-skill` 补 bundle |
 | `export-distribution-layout.sh` 产出物 | 开源发布、内网镜像 |
 
 ### 步骤 2：项目指南
