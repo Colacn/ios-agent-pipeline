@@ -6,19 +6,19 @@
 
 ### Removed
 
-- **project-overlays/ctq-ios/**：框架仓不再包含任何 CTQ IM/RTC 业务 overlay。
+- 框架仓内嵌的业务域 overlay（改为仅保留 overlay 机制说明与 `templates/overlay/sample/` 脚手架）。
 
 ### Changed
 
-- overlay 由**业务仓**维护；安装时通过 `OVERLAY_SRC` 或业务仓 `project-overlays/` 解析。
+- overlay 由**应用仓**维护；安装时通过 `OVERLAY_SRC` 或应用仓 `project-overlays/` 解析。
 - 框架仅保留无业务语义的 **`templates/overlay/sample/`** 脚手架。
-- `AGENTS.md.example`、Skill、README 去除 IM/RTC/CTQ 业务引用。
+- 文档与 Skill 去除具体业务域引用。
 
 ## [0.3.0] - 2026-06-16
 
 ### Added
 
-- **project-overlays/**：业务 overlay 约定（**不含业务内容**；CTQ 等由业务仓自建）。
+- **project-overlays/**：overlay 约定目录（**框架仓不含业务内容**）。
 - **install 增强**：`--init-agents`、`--overlay NAME`、`--check`、`--dry-run`。
 - **scripts/reconcile-check.sh**：对照 `git diff` 与 `developer.implementation.md` §4/§8。
 - **references/guide/path-conventions.md**、**layering.md**；可配置 **check-run-patterns.txt**。

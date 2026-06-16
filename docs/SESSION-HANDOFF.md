@@ -39,15 +39,11 @@ analyze → plan → review → develop → reconcile-docs → test
 
 ---
 
-## 四、从何而来（历史背景）
+## 四、框架与项目层边界
 
-本框架从 **CTQ iOS 业务仓** 的 `.cursor/` 工作流优化分支拆出独立发布：
-
-- 起源 worktree：`CTQApplication 3.15.0 Feature Optimize Agent Workflow`（分支 `srd19121830097/feature/optimize-agent-workflow`）
-- 已完成：产物命名统一（Skill 名）、`check-run.sh` 机械校验、grading 硬例子、runs 归档策略、移除 Superpowers 耦合、跨 IDE 文档与安装脚本
-- **业务源码不在本仓**：`CTQ_IMKit`、`CTQIMApplication` 等仍在私有业务仓
-
-业务仓若仍嵌有 `.cursor/`，应通过 **install 脚本从本仓同步**，避免两套 SOP 分叉。
+- **本仓只含框架**：SOP、Skill、脚本、模板、公共 references；**不含**具体 App 源码或团队业务 overlay。
+- **项目层在应用仓**：`AGENTS.md` / `CLAUDE.md`、`project-overlays/<name>/`、验证命令、分层表由使用方自行维护。
+- **避免 SOP 分叉**：应用仓若内嵌 `.cursor/` 工作流，应通过 **install 脚本从本仓同步**，不要与框架各维护一套。
 
 ---
 
@@ -60,8 +56,9 @@ ios-agent-pipeline/
 ├── agents/                     # Subagent 薄路由（→ skills，不重复长 SOP）
 ├── references/                 # 公共规则 workflow / structure / rules / guide
 ├── scripts/                    # bootstrap-run, check-run, install, export
-├── templates/                  # skip-step, developer-implementation 等
-├── rules/                      # 可选 .mdc（如 OC 编码约束）
+├── templates/                  # skip-step、overlay/sample 脚手架等
+├── project-overlays/           # 仅 README（overlay 机制说明）
+├── rules/                      # 可选 .mdc
 ├── .cursor-plugin/             # Cursor Marketplace 可选通道
 ├── docs/SESSION-HANDOFF.md     # 本文件
 ├── README.md
@@ -150,8 +147,8 @@ bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project.sh cursor
 
 - skills.sh 各 `@analyze` … `@test` 入口验证与 README 安装量说明
 - Cursor Marketplace 提交审核（若需要 IDE 内发现）
-- 业务仓 CTQ：`install-framework-to-project.sh` 接入并删除重复 `.cursor/` 分叉
-- 框架版本 tag（如 `v0.2.0`）与 CHANGELOG
+- 应用仓接入：`install-framework-to-project.sh` 同步框架，删除与框架重复的本地 `.cursor/` 分叉
+- 框架版本 tag 与 CHANGELOG 持续维护
 - Skill 内链：部分仍写 `.cursor/skills/...`（**安装到业务仓 `.cursor/` 后正确**；在本框架仓根浏览时路径不同，属预期）
 
 ---
@@ -169,7 +166,7 @@ bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project.sh cursor
 
 ## 背景（请当作事实）
 
-1. 从 CTQ iOS 业务仓 `.cursor/` 工作流优化后 **独立拆仓** 公开发布。
+1. 本仓库为 **IDE 中立的 Agent 产研流水线框架**，与应用业务代码分离。
 2. 流水线：`analyze → plan → review → develop → reconcile-docs → test`。
 3. **Skill 名**用于落盘（`analyze.requirements.md` 等）；**Subagent 名**（analyst 等）仅为 IDE 入口，不是第二套 SOP。
 4. **不与 Cursor 强绑定**：可装 Cursor / Claude Code / Codex / skills.sh；框架内不含 Superpowers。
@@ -208,4 +205,4 @@ cat framework.manifest.json
 1. 打开 **ios-agent-pipeline** 仓库（或已 install 框架的业务仓）。
 2. 新建 Chat，粘贴上方「会话提示词」代码块内全文（不含外层 ` ```markdown ` 围栏）。
 3. 在 `<!-- 在此填写本轮目标 -->` 处写上本轮具体任务。
-4. 若本轮只改业务功能，应打开 **CTQ 业务仓** 并在提示词中说明「框架已 install，勿改框架仓除非必要」。
+4. 若本轮只改**应用业务功能**，应打开**目标应用仓库**（已 install 框架），并在提示词中说明「勿改框架仓除非必要」。
