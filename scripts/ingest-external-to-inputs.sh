@@ -23,7 +23,7 @@ if [[ $# -eq 0 ]]; then
 fi
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=lib/resolve-repo-root.sh
+# shellcheck source=scripts/lib/resolve-repo-root.sh
 source "$script_dir/lib/resolve-repo-root.sh"
 repo_root="$(resolve_repo_root_from_script_dir "$script_dir")"
 inputs_dir="$(cd "$repo_root/runs/$slug/inputs" 2>/dev/null && pwd)" || {

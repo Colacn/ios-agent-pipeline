@@ -182,14 +182,18 @@ init_agents_md() {
 
 expand_home() {
   local p="$1"
-  if [[ "$p" == "~/"* ]]; then
-    printf '%s' "${HOME}${p#\~}"
-  elif [[ "$p" == *CODEX_HOME* ]]; then
-    local codex_home="${CODEX_HOME:-$HOME/.codex}"
-    printf '%s/skills' "$codex_home"
-  else
-    printf '%s' "$p"
-  fi
+  case "$p" in
+    "~/"*)
+      printf '%s' "${HOME}${p#\~}"
+      ;;
+    *CODEX_HOME*)
+      local codex_home="${CODEX_HOME:-$HOME/.codex}"
+      printf '%s/skills' "$codex_home"
+      ;;
+    *)
+      printf '%s' "$p"
+      ;;
+  esac
 }
 
 install_global_skills() {
