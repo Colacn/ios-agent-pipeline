@@ -1,0 +1,46 @@
+.cursor-plugin/plugin.json
+  s_fc1231bf4cada5::t_aabbf1556993b5 3
+references/guide/installation.md
+  s_fc1231bf4cada5::t_4685e5941571a2 26-27,29
+scripts/install-framework-to-project.sh
+  s_fc1231bf4cada5::t_29b0ca2028748d 11-14,29-30,38-39,47-53,59-60,64-68,74-95,144-152,160-194,200-209,211-213,292-300,360-371
+CHANGELOG.md
+  s_fc1231bf4cada5::t_86543ebff3b382 5-19
+scripts/smoke-test.sh
+  s_fc1231bf4cada5::t_d8ebe8d9dc0181 19,29-44
+  s_fc1231bf4cada5::t_ccd601d0dccf85 16
+  s_fc1231bf4cada5::t_fad5ce2f07dd1c 46
+  s_fc1231bf4cada5::t_25f904136af751 9
+README.md
+  s_fc1231bf4cada5::t_ab0bee74435478 26-32
+  s_fc1231bf4cada5::t_abe8a67b73cc29 64,66-72,75-78,82-84
+references/guide/distribution.md
+  s_fc1231bf4cada5::t_6633ef0a73c82d 9-11
+  s_fc1231bf4cada5::t_fcda3185d5a6d0 54-55,57
+  s_fc1231bf4cada5::t_f67f2a56485733 61-63,71-78
+scripts/lib/skill-install.sh
+  s_fc1231bf4cada5::t_71bee23f7546be 1-59
+scripts/install-skill.sh
+  s_fc1231bf4cada5::t_11cd77f6154c44 1-106
+framework.manifest.json
+  s_fc1231bf4cada5::t_c50c4fc84495dd 3
+  s_fc1231bf4cada5::t_8d4884f4e6f31a 46-60,65-66
+references/guide/skills-ecosystem-alignment.md
+  s_fc1231bf4cada5::t_a98670e196b0ac 44-46,48
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "9bc62f306dc20cc954af5f55a1b47ee3e2486ddc",
+  "prompts": {},
+  "sessions": {
+    "s_fc1231bf4cada5": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "ec54db4e-4979-45aa-b57c-43d984f8f3a3",
+        "model": "default"
+      },
+      "human_author": "lixiuwei <lixiuwei1121@gmail.com>"
+    }
+  }
+}
