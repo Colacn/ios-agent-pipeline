@@ -1,0 +1,24 @@
+README.md
+  s_86888079cec29b::t_5fb040a1350ce2 21
+  s_86888079cec29b::t_88759a69720dbb 60-61
+PUBLISH.md
+  s_86888079cec29b::t_b4586a5c14e39b 62
+  s_86888079cec29b::t_483c2346e8a4bd 46
+  s_86888079cec29b::t_2c87ff14b1ab66 53
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "30b575d5681552ea1e6c849eddac93527c44af5c",
+  "prompts": {},
+  "sessions": {
+    "s_86888079cec29b": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "372ff577-e886-461c-aeda-d8211b64a7f1",
+        "model": "default"
+      },
+      "human_author": "lixiuwei <lixiuwei1121@gmail.com>"
+    }
+  }
+}
