@@ -43,14 +43,14 @@ gh repo view --web
 在 iOS 业务仓库根目录：
 
 ```bash
-git clone https://github.com/<你的用户名>/ios-agent-pipeline.git /tmp/ios-agent-pipeline
+git clone https://github.com/Colacn/ios-agent-pipeline.git /tmp/ios-agent-pipeline
 bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project.sh cursor
 ```
 
 或使用 submodule：
 
 ```bash
-git submodule add https://github.com/<你的用户名>/ios-agent-pipeline.git .agent-pipeline-src
+git submodule add https://github.com/Colacn/ios-agent-pipeline.git .agent-pipeline-src
 bash .agent-pipeline-src/scripts/install-framework-to-project.sh cursor
 ```
 
@@ -59,7 +59,7 @@ bash .agent-pipeline-src/scripts/install-framework-to-project.sh cursor
 仓库公开后，用户可：
 
 ```bash
-npx skills add <你的用户名>/ios-agent-pipeline@analyze
+npx skills add Colacn/ios-agent-pipeline@analyze
 ```
 
 整包仍推荐 Git clone + `install-framework-to-project.sh`。

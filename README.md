@@ -18,7 +18,7 @@ Install into **Cursor**, **Claude Code**, **Codex**, or any editor that supports
 In your **application repository root**:
 
 ```bash
-git clone https://github.com/<your-username>/ios-agent-pipeline.git /tmp/ios-agent-pipeline
+git clone https://github.com/Colacn/ios-agent-pipeline.git /tmp/ios-agent-pipeline
 bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project.sh cursor
 ```
 
@@ -57,8 +57,8 @@ bash .cursor/scripts/check-run.sh smoke-test
 Browse [skills.sh](https://skills.sh/). Per-stage install (after this repo is published):
 
 ```bash
-npx skills add <your-username>/ios-agent-pipeline@analyze
-npx skills add <your-username>/ios-agent-pipeline@plan
+npx skills add Colacn/ios-agent-pipeline@analyze
+npx skills add Colacn/ios-agent-pipeline@plan
 ```
 
 For `references/`, `scripts/`, and `templates/`, use the full Git install above.
