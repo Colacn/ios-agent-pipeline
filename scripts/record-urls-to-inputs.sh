@@ -14,7 +14,9 @@ if [[ $# -eq 0 ]]; then
 fi
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-repo_root="$(cd "$script_dir/../.." && pwd)"
+# shellcheck source=lib/resolve-repo-root.sh
+source "$script_dir/lib/resolve-repo-root.sh"
+repo_root="$(resolve_repo_root_from_script_dir "$script_dir")"
 inputs_dir="$repo_root/runs/$slug/inputs"
 mkdir -p "$inputs_dir"
 out="$inputs_dir/source-urls.md"

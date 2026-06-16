@@ -9,12 +9,12 @@ description: Use this skill when validating Objective-C/Swift changes after deve
 
 1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)（**优先通读**）。**runs 工区**：落盘 **test** 报告与台账 `test.report.md` / `test.ledger.md` 前，若尚无 `runs/<slug>/outputs/`，执行 [`scripts/bootstrap-run.sh`](scripts/bootstrap-run.sh) `<slug>`（与其他 Skill 同源）。
 2. **Inputs**：验收 Given/When/Then、`develop` 改动清单、兼容说明、发布约束；若用户明确要求，再纳入回滚/处置预案说明。
-3. **分层对照**（行为边界）：`.cursor/skills/plan/SKILL.md` 附录 A。
+3. **分层对照**：[`../plan/SKILL.md`](../plan/SKILL.md) 附录 A + 项目 overlay（若有）。
 4. **Evidence**：结论须可复现；未测范围必须写明。
 5. **Escalation**：阻塞级 → `develop`；方案/闸门问题 → `review` / `plan`。
 6. **落盘强制**：每次执行结束必须生成/更新测试文档并返回路径（有问题输出台账，无问题输出结论）。
 7. **手动补录**：用户出现“追加台账/补录问题/添加问题”等意图时，先用 `AskQuestion` 结构化采集，再按 `references/execution-playbook.md` 与 `references/manual-intake.md` 写入同一台账，不覆盖历史。
-8. **流水线硬门禁**：以 [`AGENTS.md`](../../../AGENTS.md) 路由总览 + [`../../references/workflow/pipeline.md`](../../references/workflow/pipeline.md) 细则为准；本 Skill 仅补充 test 侧特有执行细则。
+8. **流水线硬门禁**：项目根 `AGENTS.md` + [`../../references/workflow/pipeline.md`](../../references/workflow/pipeline.md)。
 9. **test** 报告与台账的分工与落盘细则以 `references/execution-playbook.md` 为准（报告定稿、台账追踪）。
 
 ## On-demand references（按需读取）
@@ -47,5 +47,5 @@ description: Use this skill when validating Objective-C/Swift changes after deve
 
 ## Related rules
 
-- `AGENTS.md`（产研流水线与工作流）
-- `.cursor/skills/develop/SKILL.md` **Appendix**「协作与质量纪律」
+- 项目根 `AGENTS.md`
+- [`../develop/SKILL.md`](../develop/SKILL.md) Appendix

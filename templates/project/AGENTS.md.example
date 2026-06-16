@@ -189,7 +189,20 @@
 5. 沟通与口径对齐：[`.cursor/references/workflow/communication.md`](.cursor/references/workflow/communication.md)
 6. runs 归档规则：[`.cursor/references/structure/runs-archive.md`](.cursor/references/structure/runs-archive.md)
 7. Skill/Subagent 使用：[`.cursor/references/guide/skill-subagent.md`](.cursor/references/guide/skill-subagent.md)
-8. 维护约定：[`.cursor/references/guide/maintain.md`](.cursor/references/guide/maintain.md)
+8. 路径约定：[`.cursor/references/guide/path-conventions.md`](.cursor/references/guide/path-conventions.md)
+9. 维护约定：[`.cursor/references/guide/maintain.md`](.cursor/references/guide/maintain.md)
+
+---
+
+## 项目 overlay（可选）
+
+业务域分层与编码规范可安装到仓库根 `project-overlays/<name>/`（与 `.cursor/` 同级）：
+
+```bash
+bash .cursor/scripts/install-framework-to-project.sh cursor --init-agents --overlay ctq-ios
+```
+
+详见框架仓 [`project-overlays/README.md`](project-overlays/README.md)（安装后路径相同）。
 
 ---
 
@@ -248,7 +261,7 @@
 - `bash .cursor/scripts/ingest-external-to-inputs.sh [--move] <short-slug> <path...>`
 - `bash .cursor/scripts/record-urls-to-inputs.sh <short-slug> <url...>`
 - `bash .cursor/scripts/check-run.sh <short-slug>`（校验 outputs 命名与证据基线）
-- `bash .cursor/scripts/install-framework-to-project.sh [cursor|claude|codex|neutral|all]`（安装到其他项目 / 多 IDE）
+- `bash .cursor/scripts/install-framework-to-project.sh [cursor|claude|codex|neutral|all] [--init-agents] [--overlay NAME] [--check]`
 - `bash .cursor/scripts/export-distribution-layout.sh <dir>`（导出 IDE 中立发布包）
 
 ### 模板

@@ -2,13 +2,19 @@
 # 将自研 Agent 工作流框架安装到目标项目（支持多 IDE 落盘路径）。
 #
 # 用法（在目标业务仓库根目录）：
-#   bash /path/to/framework/.cursor/scripts/install-framework-to-project.sh [target...]
+#   bash /path/to/ios-agent-pipeline/scripts/install-framework-to-project.sh [options] [target...]
 #
 # target（可多个）：cursor | claude | codex | neutral | all
 #   默认：cursor
 #
+# options:
+#   --init-agents     若不存在则从 templates/project/AGENTS.md.example 生成 AGENTS.md
+#   --overlay NAME    安装 project-overlays/NAME 到业务仓 project-overlays/NAME
+#   --check           安装后执行 scripts/smoke-test.sh
+#   --dry-run         仅打印将执行的操作，不写入
+#
 # 环境变量：
-#   FRAMEWORK_SRC  框架源目录（含 skills/agents/...）；默认=本脚本上级目录（.cursor）
+#   FRAMEWORK_SRC     框架源目录；默认=本脚本上级目录
 #   INSTALL_GLOBAL=1  对 claude/codex 额外复制 skills 到用户全局 skills 目录
 set -euo pipefail
 
@@ -17,7 +23,51 @@ default_src="$(cd "$script_dir/.." && pwd)"
 FRAMEWORK_SRC="${FRAMEWORK_SRC:-$default_src}"
 
 project_root="$(pwd)"
-targets=("$@")
+INIT_AGENTS=0
+RUN_CHECK=0
+DRY_RUN=0
+OVERLAYS=()
+targets=()
+
+usage() {
+  cat <<EOF
+用法: $0 [options] [target...]
+
+target: cursor | claude | codex | neutral | all  （默认 cursor）
+
+options:
+  --init-agents       从模板生成 AGENTS.md（已存在则跳过）
+  --overlay NAME      安装 project-overlays/NAME
+  --check             安装后跑 smoke-test.sh
+  --dry-run           预览，不写入
+EOF
+}
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --init-agents) INIT_AGENTS=1; shift ;;
+    --check) RUN_CHECK=1; shift ;;
+    --dry-run) DRY_RUN=1; shift ;;
+    --overlay)
+      OVERLAYS+=("${2:?--overlay 需要名称}")
+      shift 2
+      ;;
+    -h | --help)
+      usage
+      exit 0
+      ;;
+    cursor | claude | codex | neutral | all)
+      targets+=("$1")
+      shift
+      ;;
+    *)
+      echo "ERROR: 未知参数: $1" >&2
+      usage >&2
+      exit 1
+      ;;
+  esac
+done
+
 if [[ ${#targets[@]} -eq 0 ]]; then
   targets=(cursor)
 fi
@@ -25,11 +75,20 @@ if [[ "${targets[0]:-}" == "all" ]]; then
   targets=(cursor claude codex neutral)
 fi
 
+log_action() {
+  if [[ $DRY_RUN -eq 1 ]]; then
+    echo "[dry-run] $*"
+  else
+    echo "$@"
+  fi
+}
+
 copy_tree() {
   local src="$1" dest="$2"
   [[ -d "$src" ]] || return 0
+  log_action "copy: $src -> $dest"
+  [[ $DRY_RUN -eq 1 ]] && return 0
   mkdir -p "$dest"
-  # rsync 优先；无 rsync 时 cp -R
   if command -v rsync >/dev/null 2>&1; then
     rsync -a "$src/" "$dest/"
   else
@@ -47,16 +106,58 @@ merge_component() {
 install_to_dir() {
   local dest_root="$1"
   local label="$2"
-  echo "==> 安装到 ${label}: ${dest_root}"
-  mkdir -p "$dest_root"
+  log_action "==> 安装到 ${label}: ${dest_root}"
+  [[ $DRY_RUN -eq 0 ]] && mkdir -p "$dest_root"
   for c in skills agents references scripts templates rules; do
     merge_component "$c" "$dest_root"
   done
-  # 复制 manifest 便于校验版本
   if [[ -f "$FRAMEWORK_SRC/framework.manifest.json" ]]; then
-    cp "$FRAMEWORK_SRC/framework.manifest.json" "$dest_root/framework.manifest.json"
+    log_action "copy manifest -> $dest_root/framework.manifest.json"
+    [[ $DRY_RUN -eq 0 ]] && cp "$FRAMEWORK_SRC/framework.manifest.json" "$dest_root/framework.manifest.json"
   fi
-  chmod +x "$dest_root/scripts/"*.sh 2>/dev/null || true
+  if [[ $DRY_RUN -eq 0 ]]; then
+    chmod +x "$dest_root/scripts/"*.sh 2>/dev/null || true
+    chmod +x "$dest_root/scripts/lib/"*.sh 2>/dev/null || true
+  fi
+}
+
+install_overlay() {
+  local name="$1"
+  local src="$FRAMEWORK_SRC/project-overlays/$name"
+  local dest="$project_root/project-overlays/$name"
+  if [[ ! -d "$src" ]]; then
+    echo "ERROR: overlay 不存在: project-overlays/$name" >&2
+    exit 1
+  fi
+  log_action "==> overlay: $name -> $dest"
+  copy_tree "$src" "$dest"
+}
+
+init_agents_md() {
+  local guide="$project_root/AGENTS.md"
+  local template="$FRAMEWORK_SRC/templates/project/AGENTS.md.example"
+  if [[ -f "$guide" ]]; then
+    log_action "hint: 已存在 AGENTS.md，跳过 --init-agents"
+    return 0
+  fi
+  if [[ ! -f "$template" ]]; then
+    echo "ERROR: 缺少模板 $template" >&2
+    exit 1
+  fi
+  log_action "==> 生成 AGENTS.md 自模板"
+  [[ $DRY_RUN -eq 0 ]] && cp "$template" "$guide"
+  for name in "${OVERLAYS[@]+"${OVERLAYS[@]}"}"; do
+    local fragment="$FRAMEWORK_SRC/project-overlays/$name/AGENTS.fragment.md"
+    if [[ -f "$fragment" ]]; then
+      log_action "==> 追加 overlay 片段: $name"
+      if [[ $DRY_RUN -eq 0 ]]; then
+        {
+          echo ""
+          cat "$fragment"
+        } >> "$guide"
+      fi
+    fi
+  done
 }
 
 expand_home() {
@@ -74,7 +175,8 @@ expand_home() {
 install_global_skills() {
   local global_base="$1"
   local label="$2"
-  echo "==> 全局 skills (${label}): ${global_base}"
+  log_action "==> 全局 skills (${label}): ${global_base}"
+  [[ $DRY_RUN -eq 1 ]] && return 0
   mkdir -p "$global_base"
   local skill_dir
   for skill_dir in "$FRAMEWORK_SRC/skills"/*; do
@@ -88,9 +190,9 @@ install_global_skills() {
 warn_agents_guide() {
   local guide="$1"
   if [[ ! -f "$project_root/$guide" ]]; then
-    echo "hint: 建议在项目根创建 ${guide}，链到 ${1%%/*} 下 references/workflow/pipeline.md"
+    log_action "hint: 建议 --init-agents 或手动创建 ${guide}"
   else
-    echo "hint: 未修改已有 ${guide}；请自行合并流水线路由说明"
+    log_action "hint: 未修改已有 ${guide}"
   fi
 }
 
@@ -119,14 +221,31 @@ for t in "${targets[@]}"; do
       warn_agents_guide "AGENTS.md"
       ;;
     *)
-      echo "ERROR: 未知 target: $t（可用: cursor claude codex neutral all）" >&2
+      echo "ERROR: 未知 target: $t" >&2
       exit 1
       ;;
   esac
 done
 
-echo ""
-echo "安装完成。验证（按实际落盘路径调整）:"
-echo "  bash .cursor/scripts/bootstrap-run.sh smoke-test"
-echo "  bash .cursor/scripts/check-run.sh smoke-test"
-echo "详见 .cursor/references/guide/cross-platform-deployment.md"
+for name in "${OVERLAYS[@]+"${OVERLAYS[@]}"}"; do
+  install_overlay "$name"
+done
+
+if [[ $INIT_AGENTS -eq 1 ]]; then
+  init_agents_md
+fi
+
+if [[ $DRY_RUN -eq 0 ]]; then
+  echo ""
+  echo "安装完成。验证示例（Cursor 落盘为 .cursor/ 时）："
+  echo "  bash .cursor/scripts/bootstrap-run.sh smoke-test"
+  echo "  bash .cursor/scripts/check-run.sh smoke-test"
+  echo "  bash .cursor/scripts/reconcile-check.sh <slug>   # develop 出口后"
+  echo "详见 references/guide/cross-platform-deployment.md"
+fi
+
+if [[ $RUN_CHECK -eq 1 && $DRY_RUN -eq 0 ]]; then
+  echo ""
+  echo "==> 运行 smoke-test"
+  bash "$FRAMEWORK_SRC/scripts/smoke-test.sh"
+fi

@@ -9,10 +9,10 @@ description: Use this skill when evaluating analyze/plan outputs before implemen
 
 1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)（**优先通读**）。**runs 工区**：落盘 **review** 闸门 `outputs/review.gate.md` 前，若工区目录不存在，执行 [`scripts/bootstrap-run.sh`](scripts/bootstrap-run.sh) `<slug>`（与其他 Skill 同源）。
 2. **Inputs**：`analyze` + `plan` 产出；补充人类约束（窗口、合规、性能等）。
-3. **分层对照**：`.cursor/skills/plan/SKILL.md` 附录 A（分层与依赖）。
+3. **分层对照**：[`../plan/SKILL.md`](../plan/SKILL.md) 附录 A + 项目 overlay（若有）。
 4. **Ruling**：给出 `通过` / `有条件通过` / `不通过`；关键发现须带**证据**与阻塞性；必改 vs 建议分离。
-5. Heavy reviews：可按 `references/execution-playbook.md`「多视角评审（可选）」组织多视角并线；若仓库未来新增评审辅助文档，可按需引用，默认不依赖额外模板。
-6. **流水线硬门禁**：以 [`AGENTS.md`](../../../AGENTS.md) 路由总览 + [`../../references/workflow/pipeline.md`](../../references/workflow/pipeline.md) 细则为准；本 Skill 仅补充 review 侧特有执行细则。
+5. Heavy reviews：可按 execution-playbook「多视角评审（可选）」组织。
+6. **流水线硬门禁**：项目根 `AGENTS.md` + [`../../references/workflow/pipeline.md`](../../references/workflow/pipeline.md)。
 7. **极简需求清单的闸门**（**analyze** 产出为短表时）：若需求清单为**短编号条**，须核对 `plan` 是否已有 **§0 对表索引** 且**每条**在**后文设计/范围/测试等章节**中可找到可验收落点，避免「需求只有四条、方案缺了条数/分档/兼容」类缺口；**不**以单独「§0.1 细则承接」大段与正文是否重复为替代标准。对照 `plan` Skill 第 8 条与 `analyze` 需求清单体例。
 
 ## On-demand references（按需读取）
@@ -36,5 +36,5 @@ description: Use this skill when evaluating analyze/plan outputs before implemen
 
 ## Related rules
 
-- `AGENTS.md`（产研流水线与工作流）
-- `.cursor/skills/develop/SKILL.md` **Appendix**「协作与质量纪律」
+- 项目根 `AGENTS.md`
+- [`../develop/SKILL.md`](../develop/SKILL.md) Appendix

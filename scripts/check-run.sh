@@ -15,7 +15,9 @@ if [[ -z "$slug" ]]; then
 fi
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-repo_root="$(cd "$script_dir/../.." && pwd)"
+# shellcheck source=lib/resolve-repo-root.sh
+source "$script_dir/lib/resolve-repo-root.sh"
+repo_root="$(resolve_repo_root_from_script_dir "$script_dir")"
 outputs_dir="$repo_root/runs/$slug/outputs"
 
 errors=0
@@ -94,11 +96,28 @@ for req in analyze.requirements.md plan.solution.md review.gate.md developer.imp
   fi
 done
 
-# --- plan 过时标记 ---
+# --- plan 过时标记（可配置 patterns）---
 plan_file="$outputs_dir/plan.solution.md"
 if [[ -f "$plan_file" ]]; then
-  if grep -qE '待实现|T3 阻塞|待 Toast' "$plan_file" 2>/dev/null; then
-    warn "plan.solution.md 含可能过时标记（待实现 / T3 阻塞 / 待 Toast）"
+  pattern_files=()
+  fw_dir="$(cd "$script_dir/.." && pwd)"
+  [[ -f "$fw_dir/references/rules/check-run-patterns.txt" ]] && pattern_files+=("$fw_dir/references/rules/check-run-patterns.txt")
+  if [[ -d "$repo_root/project-overlays" ]]; then
+    while IFS= read -r pf; do
+      pattern_files+=("$pf")
+    done < <(find "$repo_root/project-overlays" -name check-run-patterns.txt 2>/dev/null || true)
+  fi
+  matched_patterns=()
+  for pf in "${pattern_files[@]}"; do
+    while IFS= read -r pat; do
+      [[ -z "$pat" || "$pat" =~ ^# ]] && continue
+      if grep -qF "$pat" "$plan_file" 2>/dev/null; then
+        matched_patterns+=("$pat")
+      fi
+    done < "$pf"
+  done
+  if [[ ${#matched_patterns[@]} -gt 0 ]]; then
+    warn "plan.solution.md 含可能过时标记: ${matched_patterns[*]}"
   fi
 fi
 

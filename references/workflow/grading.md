@@ -35,6 +35,6 @@
 |------|------|------|
 | 只读定位、解释代码 | L0 | `analyze`，不改代码 |
 | 改 1 个文件文案/颜色 | L1 | 轻量通道（最小改动 + 最小验证），不走全链路 |
-| 跨 IMKit + IMLib，动持久化 | L3 | 全链路：`analyze → plan → review → develop → test` |
+| 跨多模块 / 动持久化或公共 API | L3 | 全链路：`analyze → plan → review → develop → test` |
 | 用户输入 `/planner` 或 `Task(planner)` | 强制流水线 | 从 plan 或更早阶段（缺 analyze 则先补） |
 | 仅优化 `.cursor` 规则文档 | L1–L2 | 可直改 + 自检，不必 fake 六阶段产物 |

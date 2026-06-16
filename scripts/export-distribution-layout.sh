@@ -23,7 +23,11 @@ mkdir -p "$out_dir"
 out_dir="$(cd "$out_dir" && pwd)"
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 framework_src="$(cd "$script_dir/.." && pwd)"
-repo_root="$(cd "$framework_src/.." && pwd)"
+
+manifest_version="0.2.0"
+if [[ -f "$framework_src/framework.manifest.json" ]]; then
+  manifest_version="$(grep -E '"version"' "$framework_src/framework.manifest.json" | head -1 | sed -E 's/.*"version"[[:space:]]*:[[:space:]]*"([^"]+)".*/\1/')"
+fi
 
 copy_tree() {
   local src="$1" dest="$2"
@@ -39,7 +43,7 @@ copy_tree() {
 }
 
 mkdir -p "$out_dir"
-for c in skills agents references scripts templates rules; do
+for c in skills agents references scripts templates rules project-overlays; do
   copy_tree "$framework_src/$c" "$out_dir/$c"
 done
 
@@ -48,10 +52,10 @@ chmod +x "$out_dir/scripts/"*.sh 2>/dev/null || true
 
 # Cursor Marketplace 通道（可选，非唯一安装方式）
 mkdir -p "$out_dir/.cursor-plugin"
-cat > "$out_dir/.cursor-plugin/plugin.json" <<'EOF'
+cat > "$out_dir/.cursor-plugin/plugin.json" <<EOF
 {
   "name": "ios-agent-pipeline",
-  "version": "0.1.0",
+  "version": "${manifest_version}",
   "description": "IDE-agnostic iOS agent pipeline (analyze → plan → review → develop → test). Install project bundle via scripts/install-framework-to-project.sh for full references/scripts.",
   "keywords": ["ios", "agent", "pipeline", "workflow", "skills"],
   "skills": "skills",
@@ -95,8 +99,8 @@ npx skills add <owner/repo>@analyze
 EOF
 
 mkdir -p "$out_dir/templates/project"
-if [[ -f "$repo_root/AGENTS.md" ]]; then
-  cp "$repo_root/AGENTS.md" "$out_dir/templates/project/AGENTS.md.example"
+if [[ -f "$framework_src/templates/project/AGENTS.md.example" ]]; then
+  cp "$framework_src/templates/project/AGENTS.md.example" "$out_dir/templates/project/AGENTS.md.example"
 fi
 
 echo "已导出到: $out_dir"

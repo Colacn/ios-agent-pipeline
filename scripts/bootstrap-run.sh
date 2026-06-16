@@ -13,7 +13,9 @@
 set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-repo_root="$(cd "$script_dir/../.." && pwd)"
+# shellcheck source=lib/resolve-repo-root.sh
+source "$script_dir/lib/resolve-repo-root.sh"
+repo_root="$(resolve_repo_root_from_script_dir "$script_dir")"
 
 current_branch() {
   git -C "$repo_root" rev-parse --abbrev-ref HEAD 2>/dev/null || true

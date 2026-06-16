@@ -77,7 +77,24 @@
 
 ## 跨会话与落盘（可选）
 
-多轮场景可同步规划文件；写入仓库前遵循 `AGENTS.md` 的执行前确认。
+多轮场景可同步规划文件；写入仓库前遵循项目根 `AGENTS.md` 的执行前确认。
+
+## 路由决策（analyze 首轮）
+
+按 [`../../../references/workflow/grading.md`](../../../references/workflow/grading.md) 与 [`../../../references/workflow/light-task.md`](../../../references/workflow/light-task.md) 判定后，**在对话或落盘文首**输出下列块（L1 轻量可仅对话，不落 `runs/`）：
+
+```markdown
+## 路由决策
+- **级别**：L0 | L1 | L2 | L3
+- **通道**：轻量 | 流水线
+- **是否建 runs/**：是（slug=…）| 否
+- **理由**：…
+```
+
+- **L0**：只读分析，不改代码；通常不建 runs/。
+- **L1 轻量**：≤2 文件、无架构/契约变更 → 不强制六阶段产物；用户显式要求流水线除外。
+- **L2+ 或 L3**：bootstrap-run + 全链路或从 plan 起补上游。
+- 用户 `/plan`、`/planner` 等入口 → **强制流水线**，缺 analyze 则先补。
 
 ## 流水线中的本步（详细版）
 

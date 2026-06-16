@@ -20,6 +20,8 @@ In your **application repository root**:
 ```bash
 git clone https://github.com/Colacn/ios-agent-pipeline.git /tmp/ios-agent-pipeline
 bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project.sh cursor
+# 业务仓可选：初始化 AGENTS + CTQ overlay 并冒烟
+bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project.sh cursor --init-agents --overlay ctq-ios --check
 ```
 
 Install for multiple IDEs at once:
@@ -41,6 +43,7 @@ Verify:
 ```bash
 bash .cursor/scripts/bootstrap-run.sh smoke-test
 bash .cursor/scripts/check-run.sh smoke-test
+bash scripts/smoke-test.sh   # 框架仓：repo_root + 安装布局冒烟
 ```
 
 ## Install targets
@@ -74,6 +77,7 @@ ios-agent-pipeline/
 ├── scripts/
 ├── templates/
 ├── rules/
+├── project-overlays/         # 可选业务域 overlay（如 ctq-ios）
 └── .cursor-plugin/           # optional Cursor Marketplace channel
 ```
 
@@ -82,10 +86,12 @@ ios-agent-pipeline/
 | Doc | Description |
 |-----|-------------|
 | [**SESSION-HANDOFF.md**](docs/SESSION-HANDOFF.md) | **新会话背景包**（复制提示词给 Chat） |
+| [CHANGELOG.md](CHANGELOG.md) | 版本变更记录 |
 | [cross-platform-deployment.md](references/guide/cross-platform-deployment.md) | Multi-IDE deployment |
 | [distribution.md](references/guide/distribution.md) | Publish channels |
 | [installation.md](references/guide/installation.md) | Migration checklist |
 | [skill-subagent.md](references/guide/skill-subagent.md) | Skill vs Subagent names |
+| [path-conventions.md](references/guide/path-conventions.md) | 框架仓 vs 安装后路径 |
 | [pipeline.md](references/workflow/pipeline.md) | Pipeline rules |
 
 ## Output naming (Skill names, not Subagent names)

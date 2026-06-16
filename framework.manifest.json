@@ -1,6 +1,6 @@
 {
   "name": "ios-agent-pipeline",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "IDE-agnostic document-driven agent pipeline: analyze → plan → review → develop → test. Portable skills + references + scripts + templates.",
   "license": "MIT",
   "components": {
@@ -9,7 +9,13 @@
     "references": "references",
     "scripts": "scripts",
     "templates": "templates",
-    "rules": "rules"
+    "rules": "rules",
+    "projectOverlays": "project-overlays"
+  },
+  "overlays": {
+    "ctq-ios": {
+      "description": "CTQ IM/RTC module layering and Objective-C coding conventions"
+    }
   },
   "pipeline": ["analyze", "plan", "review", "develop", "test"],
   "outputs": {

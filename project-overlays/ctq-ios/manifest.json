@@ -1,0 +1,11 @@
+{
+  "name": "ctq-ios",
+  "version": "1.0.0",
+  "description": "CTQ iOS IM/RTC module layering and Objective-C coding conventions",
+  "files": {
+    "layering": "appendix-a-layers.md",
+    "coding": "coding-conventions.md",
+    "agentsFragment": "AGENTS.fragment.md",
+    "checkRunPatterns": "check-run-patterns.txt"
+  }
+}
