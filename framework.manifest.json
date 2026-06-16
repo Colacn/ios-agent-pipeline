@@ -1,0 +1,52 @@
+{
+  "name": "ios-agent-pipeline",
+  "version": "0.1.0",
+  "description": "IDE-agnostic document-driven agent pipeline: analyze → plan → review → develop → test. Portable skills + references + scripts + templates.",
+  "license": "MIT",
+  "components": {
+    "skills": "skills",
+    "agents": "agents",
+    "references": "references",
+    "scripts": "scripts",
+    "templates": "templates",
+    "rules": "rules"
+  },
+  "pipeline": ["analyze", "plan", "review", "develop", "test"],
+  "outputs": {
+    "analyze": "runs/<slug>/outputs/analyze.requirements.md",
+    "plan": "runs/<slug>/outputs/plan.solution.md",
+    "review": "runs/<slug>/outputs/review.gate.md",
+    "develop": "runs/<slug>/outputs/developer.implementation.md",
+    "test": ["runs/<slug>/outputs/test.report.md", "runs/<slug>/outputs/test.ledger.md"]
+  },
+  "installTargets": {
+    "cursor": {
+      "projectDir": ".cursor",
+      "projectGuide": "AGENTS.md",
+      "notes": "Cursor Marketplace plugin maps skills/agents/rules into .cursor/"
+    },
+    "claude-code": {
+      "projectDir": ".claude",
+      "projectGuide": "CLAUDE.md",
+      "globalSkillsDir": "~/.claude/skills",
+      "notes": "Skills via Skill tool; keep references/scripts under project .claude/ tree"
+    },
+    "codex": {
+      "projectDir": ".codex/agent-workflow",
+      "projectGuide": "AGENTS.md",
+      "globalSkillsDir": "${CODEX_HOME:-~/.codex}/skills",
+      "notes": "Global skill discovery; project bundle holds references/scripts for relative paths"
+    },
+    "neutral": {
+      "projectDir": "agent-workflow",
+      "projectGuide": "AGENTS.md",
+      "notes": "Portable layout for git clone / skills.sh / custom IDE adapters"
+    }
+  },
+  "distribution": {
+    "skillsSh": "https://skills.sh/",
+    "cursorMarketplace": "https://cursor.com/marketplace/publish",
+    "exportScript": "scripts/export-distribution-layout.sh",
+    "installScript": "scripts/install-framework-to-project.sh"
+  }
+}
