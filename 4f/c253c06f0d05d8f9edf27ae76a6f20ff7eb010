@@ -1,0 +1,55 @@
+references/guide/skills-ecosystem-alignment.md
+  s_fc1231bf4cada5::t_c742b79d25f885 1-62
+templates/project/AGENTS.md.example
+  s_fc1231bf4cada5::t_de68101f79b604 199,202,205
+  s_fc1231bf4cada5::t_6a5a7d2a329ada 215
+README.md
+  s_fc1231bf4cada5::t_1719bb694daf23 92
+  s_fc1231bf4cada5::t_124a706b8ae00b 77
+skills/analyze/SKILL.md
+  s_fc1231bf4cada5::t_3e2f8dddff9020 22,24-26
+  s_fc1231bf4cada5::t_d75a3b07e03155 12
+skills/plan/SKILL.md
+  s_fc1231bf4cada5::t_b370dbbbf50c7e 10-12
+  s_fc1231bf4cada5::t_c25d4424d8503c 59
+scripts/export-distribution-layout.sh
+  s_fc1231bf4cada5::t_26403f6ad60e89 46
+templates/overlay/README.md
+  s_fc1231bf4cada5::t_1fe929e698e8ab 1,3,5,7-41
+references/guide/layering.md
+  s_fc1231bf4cada5::t_890af6185584bd 13
+skills/review/SKILL.md
+  s_fc1231bf4cada5::t_4666e3b927e938 10
+skills/test/SKILL.md
+  s_fc1231bf4cada5::t_d1cee531921e76 10
+skills/develop/SKILL.md
+  s_fc1231bf4cada5::t_2694df37f03da7 69
+  s_fc1231bf4cada5::t_03f07510182d09 10
+framework.manifest.json
+  s_fc1231bf4cada5::t_46fb27219a6a9a 12
+  s_fc1231bf4cada5::t_9ae4cd0ceb564e 3
+docs/SESSION-HANDOFF.md
+  s_fc1231bf4cada5::t_c31617a987d011 116-117
+references/guide/path-conventions.md
+  s_fc1231bf4cada5::t_acbb4bc220b2ca 24-25
+.cursor-plugin/plugin.json
+  s_fc1231bf4cada5::t_40d60e99cede0b 3
+CHANGELOG.md
+  s_fc1231bf4cada5::t_52212f0e415845 5-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "4fc253c06f0d05d8f9edf27ae76a6f20ff7eb010",
+  "prompts": {},
+  "sessions": {
+    "s_fc1231bf4cada5": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "ec54db4e-4979-45aa-b57c-43d984f8f3a3",
+        "model": "default"
+      },
+      "human_author": "lixiuwei <lixiuwei1121@gmail.com>"
+    }
+  }
+}
