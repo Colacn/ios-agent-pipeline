@@ -1,6 +1,6 @@
 {
   "name": "ios-agent-pipeline",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "IDE-agnostic iOS agent pipeline (analyze → plan → review → develop → test). Install project bundle via scripts/install-framework-to-project.sh for full references/scripts.",
   "keywords": ["ios", "agent", "pipeline", "workflow", "skills"],
   "skills": "skills",

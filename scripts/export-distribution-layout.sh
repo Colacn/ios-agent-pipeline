@@ -43,7 +43,7 @@ copy_tree() {
 }
 
 mkdir -p "$out_dir"
-for c in skills agents references scripts templates rules project-overlays; do
+for c in skills agents references scripts templates rules; do
   copy_tree "$framework_src/$c" "$out_dir/$c"
 done
 

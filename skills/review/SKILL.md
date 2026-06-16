@@ -7,7 +7,7 @@ description: Use this skill when evaluating analyze/plan outputs before implemen
 
 ## Instructions
 
-1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)（**优先通读**）。**runs 工区**：落盘 **review** 闸门 `outputs/review.gate.md` 前，若工区目录不存在，执行 [`scripts/bootstrap-run.sh`](scripts/bootstrap-run.sh) `<slug>`（与其他 Skill 同源）。
+1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)（**优先通读**）。落盘 `outputs/review.gate.md` 前，若工区不存在，执行 [`../../scripts/bootstrap-run.sh`](../../scripts/bootstrap-run.sh) `<slug>`。
 2. **Inputs**：`analyze` + `plan` 产出；补充人类约束（窗口、合规、性能等）。
 3. **分层对照**：[`../plan/SKILL.md`](../plan/SKILL.md) 附录 A + 项目 overlay（若有）。
 4. **Ruling**：给出 `通过` / `有条件通过` / `不通过`；关键发现须带**证据**与阻塞性；必改 vs 建议分离。

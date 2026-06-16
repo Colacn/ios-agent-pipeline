@@ -74,8 +74,7 @@ ios-agent-pipeline/
 ├── agents/
 ├── references/
 ├── scripts/
-├── templates/                # skip-step, overlay/sample 脚手架等
-├── project-overlays/         # 仅 README（业务 overlay 在业务仓维护）
+├── templates/                # assets：交付模板、overlay/sample
 ├── rules/
 └── .cursor-plugin/
 ```
@@ -90,6 +89,7 @@ ios-agent-pipeline/
 | [distribution.md](references/guide/distribution.md) | Publish channels |
 | [installation.md](references/guide/installation.md) | Migration checklist |
 | [skill-subagent.md](references/guide/skill-subagent.md) | Skill vs Subagent names |
+| [skills-ecosystem-alignment.md](references/guide/skills-ecosystem-alignment.md) | 与 skills.sh / Agent Skills 标准对照 |
 | [path-conventions.md](references/guide/path-conventions.md) | 框架仓 vs 安装后路径 |
 | [pipeline.md](references/workflow/pipeline.md) | Pipeline rules |
 

@@ -2,6 +2,21 @@
 
 本仓库遵循 [Semantic Versioning](https://semver.org/)。
 
+## [0.3.2] - 2026-06-16
+
+### Removed
+
+- `project-overlays/README.md`（与 `templates/overlay/README.md` 重复）。
+- `skills/*/scripts/` 转发 wrapper（脚本统一在 bundle 根 `scripts/`）。
+
+### Added
+
+- `references/guide/skills-ecosystem-alignment.md`：与 skills.sh / Agent Skills 标准对照。
+
+### Changed
+
+- overlay 说明合并至 `templates/overlay/`；Skill 内链指向根 `scripts/`。
+
 ## [0.3.1] - 2026-06-16
 
 ### Removed

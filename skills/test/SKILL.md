@@ -7,7 +7,7 @@ description: Use this skill when validating Objective-C/Swift changes after deve
 
 ## Instructions
 
-1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)（**优先通读**）。**runs 工区**：落盘 **test** 报告与台账 `test.report.md` / `test.ledger.md` 前，若尚无 `runs/<slug>/outputs/`，执行 [`scripts/bootstrap-run.sh`](scripts/bootstrap-run.sh) `<slug>`（与其他 Skill 同源）。
+1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)（**优先通读**）。落盘 test 报告/台账前，若尚无 `runs/<slug>/outputs/`，执行 [`../../scripts/bootstrap-run.sh`](../../scripts/bootstrap-run.sh) `<slug>`。
 2. **Inputs**：验收 Given/When/Then、`develop` 改动清单、兼容说明、发布约束；若用户明确要求，再纳入回滚/处置预案说明。
 3. **分层对照**：[`../plan/SKILL.md`](../plan/SKILL.md) 附录 A + 项目 overlay（若有）。
 4. **Evidence**：结论须可复现；未测范围必须写明。

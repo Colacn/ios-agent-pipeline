@@ -1,9 +1,41 @@
-# Overlay 模板
+# 项目 overlay（可选）
 
-框架提供的**无业务语义**脚手架。业务团队应：
+应用仓内的**项目层**补充规则：模块分层、编码规范、验证命令等。**框架仓不含 overlay 内容**，仅提供本脚手架。
 
-1. 复制 `sample/` 到**业务仓** `project-overlays/<your-name>/`
-2. 填写真实模块名、编码规范、验证命令
-3. 安装：`bash .cursor/scripts/install-framework-to-project.sh cursor --overlay <your-name>`
+## 应用仓目录
 
-**勿**向框架上游提交业务 overlay 内容。
+```text
+your-app/
+├── AGENTS.md
+├── .cursor/                 # install 框架后
+└── project-overlays/        # 由应用仓自建
+    └── <your-name>/
+        ├── appendix-a-layers.md
+        ├── coding-conventions.md
+        ├── AGENTS.fragment.md      # 可选
+        └── check-run-patterns.txt  # 可选
+```
+
+从 [`sample/`](sample/) 复制并重命名 `<your-name>`，填写真实模块与规范。
+
+## 安装
+
+```bash
+# OVERLAY_SRC 默认：当前应用仓的 project-overlays/
+bash .cursor/scripts/install-framework-to-project.sh cursor \
+  --init-agents --overlay your-name
+```
+
+外部路径：
+
+```bash
+OVERLAY_SRC=/path/to/your-app/project-overlays \
+  bash .../install-framework-to-project.sh cursor --overlay your-name
+```
+
+## 与 Skill 的关系
+
+- **plan / develop / review / test**：若存在 overlay，读 `project-overlays/<name>/appendix-a-layers.md` 与 `coding-conventions.md`
+- **无 overlay**：在 `plan.solution.md` 与 `AGENTS.md` 自建模块表（见 [`../../references/guide/layering.md`](../../references/guide/layering.md)）
+
+**勿**向框架上游提交业务 overlay。

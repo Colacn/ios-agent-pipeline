@@ -1,6 +1,6 @@
 {
   "name": "ios-agent-pipeline",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "IDE-agnostic document-driven agent pipeline: analyze → plan → review → develop → test. Portable skills + references + scripts + templates.",
   "license": "MIT",
   "components": {
@@ -9,8 +9,7 @@
     "references": "references",
     "scripts": "scripts",
     "templates": "templates",
-    "rules": "rules",
-    "projectOverlaysReadme": "project-overlays/README.md"
+    "rules": "rules"
   },
   "pipeline": ["analyze", "plan", "review", "develop", "test"],
   "outputs": {

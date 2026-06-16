@@ -9,7 +9,7 @@ description: Use this skill when the user needs intent clarification, ambiguity 
 
 ## Instructions
 
-1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)（**优先通读**）。**走流水线**时遵守项目根 `AGENTS.md`「流水线预处理」：有外部依据则 `bootstrap-run.sh` + ingest/record-urls；否则首次落盘前 bootstrap。脚本权威实现 [`../../scripts/`](../../scripts/)，[`scripts/`](scripts/) 为兼容入口。
+1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)（**优先通读**）。**走流水线**时遵守项目根 `AGENTS.md`「流水线预处理」：有外部依据则 [`../../scripts/bootstrap-run.sh`](../../scripts/bootstrap-run.sh) + ingest/record-urls；否则首次落盘前 bootstrap。
 2. **路由决策（首轮）**：按 [`../../references/workflow/grading.md`](../../references/workflow/grading.md) 判定 L0–L3；L1 轻量通道可不建 `runs/`（见 execution-playbook「路由决策」）；L2+ 或用户显式流水线入口须 bootstrap 并落盘。
 3. 按 execution-playbook「输入源与解析范围」收拢信息。
 4. 不确定时走「轮次 A — 待澄清」；确认后「轮次 B — 分析交付」。
@@ -19,11 +19,11 @@ description: Use this skill when the user needs intent clarification, ambiguity 
 8. **内容边界**：`analyze.requirements.md` 只写要什么 + 验收 + 范围；技术细节交给 **plan**。
 9. **需求清单体例**：极短标题 + 编号要点；不堆平台词；不引用不存在的旁路文件。
 
-## Scripts（runs 工区）
+## Scripts（runs 工区，bundle 根 `scripts/`）
 
-- [`scripts/bootstrap-run.sh`](scripts/bootstrap-run.sh)：创建 `/runs/<slug>/{inputs,outputs}`。
-- [`scripts/ingest-external-to-inputs.sh`](scripts/ingest-external-to-inputs.sh)：将本地路径归档到 `inputs/`（默认复制，`--move` 可迁移）。
-- [`scripts/record-urls-to-inputs.sh`](scripts/record-urls-to-inputs.sh)：将 URL 追加到 `inputs/source-urls.md`。
+- [`../../scripts/bootstrap-run.sh`](../../scripts/bootstrap-run.sh)
+- [`../../scripts/ingest-external-to-inputs.sh`](../../scripts/ingest-external-to-inputs.sh)
+- [`../../scripts/record-urls-to-inputs.sh`](../../scripts/record-urls-to-inputs.sh)
 
 ## On-demand references（按需读取）
 

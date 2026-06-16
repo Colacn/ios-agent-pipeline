@@ -7,7 +7,7 @@ description: Use when implementing approved changes with minimal diff, layered c
 
 ## Instructions
 
-1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)（**优先通读**）。落盘 `outputs/` 前若目录不存在，执行 [`scripts/bootstrap-run.sh`](scripts/bootstrap-run.sh) `<slug>`（权威实现 [`../../scripts/bootstrap-run.sh`](../../scripts/bootstrap-run.sh)）。
+1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)（**优先通读**）。落盘 `outputs/` 前若目录不存在，执行 [`../../scripts/bootstrap-run.sh`](../../scripts/bootstrap-run.sh) `<slug>`。
 2. **Layering**：[`../plan/SKILL.md`](../plan/SKILL.md) 附录 A + 项目 overlay `project-overlays/*/appendix-a-layers.md`（冲突时以 overlay 为准）。
 3. **协作与质量**：见本文件 **Appendix**；项目编码细则见 overlay `coding-conventions.md`（若有）。
 4. **流程**：项目根 `AGENTS.md`；走流水线时遵守 execution-playbook「流水线中的本步」。
@@ -66,4 +66,4 @@ description: Use when implementing approved changes with minimal diff, layered c
 - **列表与 UI**：热路径避免重 IO；布局阶段考虑 0 尺寸兜底。
 - **交付回报**：改动文件、风险点、验证结果；纯重排须声明逻辑未变。
 
-overlay 脚手架（无业务语义）：[`../../templates/overlay/sample/`](../../templates/overlay/sample/) — 复制到业务仓后改名使用。
+overlay 脚手架：[`../../templates/overlay/sample/`](../../templates/overlay/sample/) — 复制到应用仓 `project-overlays/` 后使用（见 [`../../templates/overlay/README.md`](../../templates/overlay/README.md)）。

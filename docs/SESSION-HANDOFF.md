@@ -57,7 +57,6 @@ ios-agent-pipeline/
 ├── references/                 # 公共规则 workflow / structure / rules / guide
 ├── scripts/                    # bootstrap-run, check-run, install, export
 ├── templates/                  # skip-step、overlay/sample 脚手架等
-├── project-overlays/           # 仅 README（overlay 机制说明）
 ├── rules/                      # 可选 .mdc
 ├── .cursor-plugin/             # Cursor Marketplace 可选通道
 ├── docs/SESSION-HANDOFF.md     # 本文件
@@ -114,6 +113,8 @@ bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project.sh cursor
 | Skill vs Subagent | `references/guide/skill-subagent.md` |
 | IDE 入口对照 | `references/guide/ide-adapters.md` |
 | 项目 AGENTS 示例 | `templates/project/AGENTS.md.example` |
+| skills.sh 结构对照 | `references/guide/skills-ecosystem-alignment.md` |
+| overlay 脚手架 | `templates/overlay/README.md` |
 
 各阶段 execution-playbook：`skills/<stage>/references/execution-playbook.md`
 

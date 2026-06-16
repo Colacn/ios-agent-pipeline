@@ -7,9 +7,9 @@ description: Use when turning analyze outputs into reviewable technical plans wi
 
 ## Instructions
 
-1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)（**优先通读**）。**runs 工区**：落盘 `outputs/plan.solution.md` 前若尚无 `runs/<slug>/`，在仓库根执行 [`scripts/bootstrap-run.sh`](scripts/bootstrap-run.sh) `<slug>`（权威实现见 [`../../scripts/bootstrap-run.sh`](../../scripts/bootstrap-run.sh)）。
-2. **Layering authority**：本 Skill **附录 A** 为通用占位；**已安装 project overlay** 时以业务仓 `project-overlays/<name>/appendix-a-layers.md` 为准。详见 [`../../references/guide/layering.md`](../../references/guide/layering.md)。
-3. **编码与协作**：见 [`../develop/SKILL.md`](../develop/SKILL.md) Appendix；项目 overlay 可补充 [`project-overlays/*/coding-conventions.md`](../../project-overlays/README.md)。
+1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)（**优先通读**）。落盘 `outputs/plan.solution.md` 前若尚无 `runs/<slug>/`，执行 [`../../scripts/bootstrap-run.sh`](../../scripts/bootstrap-run.sh) `<slug>`。
+2. **Layering authority**：本 Skill **附录 A** 为通用占位；**已安装 project overlay** 时以应用仓 `project-overlays/<name>/appendix-a-layers.md` 为准。详见 [`../../references/guide/layering.md`](../../references/guide/layering.md)。
+3. **编码与协作**：见 [`../develop/SKILL.md`](../develop/SKILL.md) Appendix；overlay 见 [`../../templates/overlay/README.md`](../../templates/overlay/README.md)。
 4. **Process**：产研流水线见项目根 `AGENTS.md` 与 [`../../references/workflow/pipeline.md`](../../references/workflow/pipeline.md)；演进 overlay 或共享文档须征得用户同意。
 5. **Upstream / downstream**：输入来自 `analyze`；输出面向 `review` 与 `develop`。
 6. **流水线硬门禁**：以项目根 `AGENTS.md` 路由 + [`../../references/workflow/pipeline.md`](../../references/workflow/pipeline.md) 为准。
@@ -56,7 +56,7 @@ description: Use when turning analyze outputs into reviewable technical plans wi
 
 ### A.2 已安装 overlay
 
-读取业务仓根 `project-overlays/<name>/appendix-a-layers.md`（overlay 由**业务仓**维护，框架仓不含业务 overlay）。
+读取应用仓根 `project-overlays/<name>/appendix-a-layers.md`（由应用仓维护）。脚手架：[`../../templates/overlay/sample/`](../../templates/overlay/sample/)。
 
 ### A.3 方案交付时必须交代
 

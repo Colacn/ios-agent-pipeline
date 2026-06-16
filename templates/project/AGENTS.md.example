@@ -196,15 +196,13 @@
 
 ## 项目 overlay（可选）
 
-业务域 overlay 由**本业务仓**维护，框架不含业务内容。复制脚手架后安装：
+业务域 overlay 由**本应用仓**维护。复制 `templates/overlay/sample/` 到 `project-overlays/<your-name>/` 后：
 
 ```bash
-cp -R /path/to/ios-agent-pipeline/templates/overlay/sample project-overlays/your-team-name
-# 编辑 project-overlays/your-team-name/* 后：
-bash .cursor/scripts/install-framework-to-project.sh cursor --init-agents --overlay your-team-name
+bash .cursor/scripts/install-framework-to-project.sh cursor --init-agents --overlay your-name
 ```
 
-详见 [`project-overlays/README.md`](project-overlays/README.md)（安装后路径）与框架 [`templates/overlay/README.md`](templates/overlay/README.md)。
+详见 [`.cursor/templates/overlay/README.md`](.cursor/templates/overlay/README.md)（install 后路径）。
 
 ---
 
@@ -214,7 +212,7 @@ bash .cursor/scripts/install-framework-to-project.sh cursor --init-agents --over
 - 流水线硬门禁：以 `.cursor/references/workflow/pipeline.md` 为单一细则来源。
 - 通用门禁不重复长段；权威执行细则在 `.cursor/skills/*/SKILL.md` 与 `.cursor/skills/*/references/execution-playbook.md`。
 - 分层约束：`.cursor/agents/*` 仅声明到 Skill 的入口与流水线位置关系；**正文 SOP 不重复**到 agents。
-- 公共约束下沉：`.cursor/skills/*` 的公共流程、门禁、检查清单统一指向 `.cursor/references/*`；脚本能力统一指向 `.cursor/scripts/*`（`.cursor/skills/*/scripts` 允许作为兼容转发入口）。
+- 公共约束下沉：`.cursor/skills/*` 的流程与 checklist 指向 `.cursor/references/*`；脚本统一在 `.cursor/scripts/*`。
 - 去重原则：同一公共规则不得在多个 `.cursor/skills/*` 重复长段；仓库根 `AGENTS.md` 负责总览，跨模块细则以 `.cursor/references/*` 为准。
 - 分工边界：`outputs/analyze.requirements.md` 仅「要什么与验收口径」；技术实现细节统一在 `outputs/plan.solution.md`。（相对某次 `runs/<short-slug>/` 工作目录，见 [`.cursor/references/structure/runs-archive.md`](.cursor/references/structure/runs-archive.md)。）
 - 执行前确认门禁：详见 [`.cursor/references/rules/execution-check.md`](.cursor/references/rules/execution-check.md)。
