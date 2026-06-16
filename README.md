@@ -19,9 +19,8 @@ In your **application repository root**:
 
 ```bash
 git clone https://github.com/Colacn/ios-agent-pipeline.git /tmp/ios-agent-pipeline
-bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project.sh cursor
-# 业务仓可选：初始化 AGENTS + CTQ overlay 并冒烟
-bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project.sh cursor --init-agents --overlay ctq-ios --check
+bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project.sh cursor --init-agents --check
+# 业务 overlay 在业务仓自建 project-overlays/ 后：--overlay <name>
 ```
 
 Install for multiple IDEs at once:
@@ -70,15 +69,15 @@ For `references/`, `scripts/`, and `templates/`, use the full Git install above.
 
 ```text
 ios-agent-pipeline/
-├── framework.manifest.json   # IDE-neutral package manifest
-├── skills/                   # analyze, plan, review, develop, test
+├── framework.manifest.json
+├── skills/
 ├── agents/
 ├── references/
 ├── scripts/
-├── templates/
+├── templates/                # skip-step, overlay/sample 脚手架等
+├── project-overlays/         # 仅 README（业务 overlay 在业务仓维护）
 ├── rules/
-├── project-overlays/         # 可选业务域 overlay（如 ctq-ios）
-└── .cursor-plugin/           # optional Cursor Marketplace channel
+└── .cursor-plugin/
 ```
 
 ## Documentation

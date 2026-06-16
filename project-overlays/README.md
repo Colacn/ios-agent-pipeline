@@ -1,25 +1,47 @@
 # Project Overlays
 
-业务域约束与框架解耦：各 overlay 提供**项目层**分层表、编码规范、AGENTS 片段等；框架 Skill 保持 IDE 中立。
+**框架仓不含任何业务域 overlay。** 分层表、编码规范、团队验证命令等由**业务仓库**自行维护。
 
-## 安装
+## 业务仓目录约定
 
-在业务仓根目录（已安装框架后）：
-
-```bash
-bash .cursor/scripts/install-framework-to-project.sh cursor --overlay ctq-ios
-# 首次接入可同时初始化 AGENTS.md：
-bash .cursor/scripts/install-framework-to-project.sh cursor --init-agents --overlay ctq-ios
+```text
+your-app-repo/
+├── AGENTS.md
+├── .cursor/                    # install 框架后
+└── project-overlays/
+    └── <your-team-name>/
+        ├── manifest.json
+        ├── appendix-a-layers.md
+        ├── coding-conventions.md
+        ├── AGENTS.fragment.md      # 可选
+        └── check-run-patterns.txt    # 可选
 ```
 
-产物位于业务仓根 `project-overlays/<name>/`（与 `.cursor/` 同级）。
+## 安装 overlay
 
-## 内置 overlay
+overlay 源目录通过环境变量 **`OVERLAY_SRC`** 指定（指向含各 overlay 子目录的父路径）：
 
-| 名称 | 说明 |
-|------|------|
-| [ctq-ios](ctq-ios/) | CTQ IM/RTC 模块分层与 Objective-C 编码约定 |
+```bash
+# 在业务仓根；OVERLAY_SRC 默认为当前仓库的 project-overlays/
+bash .cursor/scripts/install-framework-to-project.sh cursor \
+  --init-agents --overlay your-team-name
+```
 
-## 自定义 overlay
+从外部路径安装：
 
-复制 `ctq-ios/manifest.json` 结构，在自有仓库或 fork 中维护 `project-overlays/<your-name>/`，安装时 `--overlay <your-name>`。
+```bash
+OVERLAY_SRC=/path/to/your-app/project-overlays \
+  bash /path/to/ios-agent-pipeline/scripts/install-framework-to-project.sh cursor \
+  --overlay your-team-name
+```
+
+## 脚手架
+
+框架仅提供**无业务语义**的模板，复制后改名填充：
+
+- [`templates/overlay/sample/`](../templates/overlay/sample/)
+
+## 与 Skill 的关系
+
+- `plan` / `develop`：有 overlay 时读 `project-overlays/<name>/appendix-a-layers.md` 与 `coding-conventions.md`
+- 无 overlay 时：在 `plan.solution.md` 与项目 `AGENTS.md` 自建模块表

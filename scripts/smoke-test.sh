@@ -26,15 +26,16 @@ bash .cursor/scripts/bootstrap-run.sh "${slug}-installed"
 test -d "$tmpdir/runs/${slug}-installed/inputs"
 echo "    OK: 安装后 runs 位于业务仓根"
 
-echo "==> [4/4] overlay + --init-agents"
+echo "==> [4/4] overlay 脚手架（sample）+ --init-agents"
 overlay_tmp="$(mktemp -d)"
 trap 'rm -rf "$tmpdir" "$overlay_tmp"' EXIT
 cd "$overlay_tmp"
 git init -q
-bash "$framework_root/scripts/install-framework-to-project.sh" cursor --init-agents --overlay ctq-ios
+OVERLAY_SRC="$framework_root/templates/overlay" \
+  bash "$framework_root/scripts/install-framework-to-project.sh" cursor --init-agents --overlay sample
 test -f AGENTS.md
-test -f project-overlays/ctq-ios/appendix-a-layers.md
-grep -q ctq-ios AGENTS.md
-echo "    OK: overlay 与 AGENTS 片段"
+test -f project-overlays/sample/appendix-a-layers.md
+grep -q 'project-overlays/sample' AGENTS.md
+echo "    OK: 脚手架 overlay 安装"
 
 echo "smoke-test: 全部通过"

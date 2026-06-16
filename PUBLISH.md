@@ -38,7 +38,7 @@ gh repo create ios-agent-pipeline \
 gh repo view --web
 ```
 
-## 4. 业务仓接入（CTQ 等）
+## 4. 业务仓接入
 
 在 iOS 业务仓库根目录：
 

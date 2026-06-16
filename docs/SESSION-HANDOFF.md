@@ -34,7 +34,7 @@ analyze → plan → review → develop → reconcile-docs → test
 | 层级 | 位置 | 职责 |
 |------|------|------|
 | **框架层** | 本仓库（或安装后的 `.cursor/` / `.claude/` / `agent-workflow/`） | SOP、Skill、脚本、模板、公共 references |
-| **项目层** | 业务仓根 `AGENTS.md` / `CLAUDE.md` | 团队偏好、iOS/IM/RTC 约束、xcodebuild 等验证 |
+| **项目层** | 业务仓根 `AGENTS.md` / `CLAUDE.md` | 团队偏好、业务域约束、项目验证命令 |
 | **工区** | 业务仓 `runs/<slug>/{inputs,outputs}/` | 单次需求的证据与交付物 |
 
 ---
@@ -173,7 +173,7 @@ bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project.sh cursor
 2. 流水线：`analyze → plan → review → develop → reconcile-docs → test`。
 3. **Skill 名**用于落盘（`analyze.requirements.md` 等）；**Subagent 名**（analyst 等）仅为 IDE 入口，不是第二套 SOP。
 4. **不与 Cursor 强绑定**：可装 Cursor / Claude Code / Codex / skills.sh；框架内不含 Superpowers。
-5. 业务域、xcodebuild、IM/RTC 分层等写在 **业务仓 AGENTS.md**，不在本框架仓。
+5. 业务域、验证命令、分层表等写在 **业务仓 AGENTS.md** 与 **project-overlays/**，不在本框架仓。
 
 ## 目录要点
 

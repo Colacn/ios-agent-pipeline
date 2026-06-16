@@ -10,7 +10,7 @@
 
 ## 已安装 overlay 时
 
-读取业务仓根 `project-overlays/<name>/appendix-a-layers.md`。内置示例：**ctq-ios**（CTQ IM/RTC）。
+读取业务仓根 `project-overlays/<name>/appendix-a-layers.md`（由业务仓维护；框架提供 [`templates/overlay/sample/`](../../templates/overlay/sample/) 脚手架）。
 
 ## 未安装 overlay 时
 

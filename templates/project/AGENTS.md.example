@@ -1,6 +1,6 @@
 # 仓库 Agent 指南（AGENTS）
 
-面向本仓库 **iOS（Objective-C / Swift）** 与 **IM/RTC** 相关改动：本文档是**项目层**总入口。**可移植流水线框架**为 IDE 中立包，默认落盘于 [`.cursor/`](.cursor/README.md)，亦可安装到 Claude Code / Codex / `agent-workflow/`（见 [跨 IDE 部署](.cursor/references/guide/cross-platform-deployment.md)）。
+面向本仓库 **软件项目**：本文档是**项目层**总入口。**可移植流水线框架**为 IDE 中立包，默认落盘于 [`.cursor/`](.cursor/README.md)，亦可安装到 Claude Code / Codex / `agent-workflow/`（见 [跨 IDE 部署](.cursor/references/guide/cross-platform-deployment.md)）。
 
 文中路径与链接以 **`.cursor/`** 为前缀：这是本仓库存放协作规则、技能与脚本的**约定目录名**（与具体 IDE/厂商无关），从仓库根打开时链接可正确解析。  
 细分规则在 `.cursor/references/`；**完整 SOP 以 `.cursor/skills/` 为准**（如各 Skill 的 `references/execution-playbook.md`）。`.cursor/agents/` 仅作 **Subagent 薄入口**（路由到对应 Skill、便于隔离上下文），**不**再承载与 Skill 重复的长 SOP。  
@@ -57,7 +57,7 @@
 - 写能解决实际问题的最少代码。
 - 不要为了项目暂时不需要的场景添加猜测性的功能、抽象、配置或错误处理。
 - 匹配正在编辑文件的现有风格，即使你个人会用另一种写法。
-- IM/RTC 分层约束见 [`.cursor/skills/plan/SKILL.md`](.cursor/skills/plan/SKILL.md) 附录 A；协作与编码规范见 [`.cursor/skills/develop/SKILL.md`](.cursor/skills/develop/SKILL.md)。
+- 分层与编码：见 [`project-overlays/`](project-overlays/)（若已安装 overlay）或 [`.cursor/skills/plan/SKILL.md`](.cursor/skills/plan/SKILL.md) 附录 A；协作纪律见 [`.cursor/skills/develop/SKILL.md`](.cursor/skills/develop/SKILL.md)。
 
 ---
 
@@ -196,13 +196,15 @@
 
 ## 项目 overlay（可选）
 
-业务域分层与编码规范可安装到仓库根 `project-overlays/<name>/`（与 `.cursor/` 同级）：
+业务域 overlay 由**本业务仓**维护，框架不含业务内容。复制脚手架后安装：
 
 ```bash
-bash .cursor/scripts/install-framework-to-project.sh cursor --init-agents --overlay ctq-ios
+cp -R /path/to/ios-agent-pipeline/templates/overlay/sample project-overlays/your-team-name
+# 编辑 project-overlays/your-team-name/* 后：
+bash .cursor/scripts/install-framework-to-project.sh cursor --init-agents --overlay your-team-name
 ```
 
-详见框架仓 [`project-overlays/README.md`](project-overlays/README.md)（安装后路径相同）。
+详见 [`project-overlays/README.md`](project-overlays/README.md)（安装后路径）与框架 [`templates/overlay/README.md`](templates/overlay/README.md)。
 
 ---
 

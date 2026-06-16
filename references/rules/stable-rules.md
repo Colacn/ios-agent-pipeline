@@ -3,7 +3,7 @@
 ## 适用边界
 
 - 仓库级长期规则、验证基线、安全红线以 `.cursor` 文档为先
-- IM/RTC 分层细则见 `skills/plan/SKILL.md` 附录 A
+- 分层细则：项目 overlay 或 `skills/plan/SKILL.md` 附录 A；见 `references/guide/layering.md`
 - 协作与编码规范见 `skills/develop/SKILL.md` Appendix
 
 ## 执行与变更原则

@@ -51,7 +51,7 @@ develop 代码完成后、移交 test 前执行：
 1. 填写 `developer.implementation.md` §2（与 plan 差异）与 §3（新增决策）。
 2. 对照 `git diff` 与 implementation，**局部修订**：
    - `outputs/analyze.requirements.md`：补全验收口径与 develop 阶段决策（不写实现细节堆砌）。
-   - `outputs/plan.solution.md`：更新为终态（删除「待 Toast」「T3 阻塞」等过时表述；补实现索引）。
+   - `outputs/plan.solution.md`：更新为终态（删除 check-run-patterns 中的过时标记；补实现索引）。
 3. 在 implementation §8 勾选 reconcile 确认项。
 4. 禁止只改 chat 不改 `runs/outputs/`。
 

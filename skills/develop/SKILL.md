@@ -62,8 +62,8 @@ description: Use when implementing approved changes with minimal diff, layered c
 
 - **最小改动**：不扩大影响面，不做无关重构。
 - **匹配既有风格**：命名、目录、语言（OC/Swift）与被改文件一致。
-- **分层**：遵守 plan / overlay 落层；不新造平行 Manager 入口。
+- **分层**：遵守 plan / overlay 落层；不新造平行入口。
 - **列表与 UI**：热路径避免重 IO；布局阶段考虑 0 尺寸兜底。
 - **交付回报**：改动文件、风险点、验证结果；纯重排须声明逻辑未变。
 
-项目 overlay 示例：**ctq-ios** — [`../../project-overlays/ctq-ios/coding-conventions.md`](../../project-overlays/ctq-ios/coding-conventions.md)。
+overlay 脚手架（无业务语义）：[`../../templates/overlay/sample/`](../../templates/overlay/sample/) — 复制到业务仓后改名使用。

@@ -15,6 +15,7 @@
 #
 # 环境变量：
 #   FRAMEWORK_SRC     框架源目录；默认=本脚本上级目录
+#   OVERLAY_SRC       overlay 父目录（含各 <name>/ 子目录）；默认=业务仓 project-overlays/
 #   INSTALL_GLOBAL=1  对 claude/codex 额外复制 skills 到用户全局 skills 目录
 set -euo pipefail
 
@@ -121,15 +122,31 @@ install_to_dir() {
   fi
 }
 
+resolve_overlay_src() {
+  local name="$1"
+  local base="${OVERLAY_SRC:-$project_root/project-overlays}"
+  if [[ -d "$base/$name" ]]; then
+    printf '%s' "$base/$name"
+    return 0
+  fi
+  if [[ -d "$FRAMEWORK_SRC/templates/overlay/$name" ]]; then
+    printf '%s' "$FRAMEWORK_SRC/templates/overlay/$name"
+    return 0
+  fi
+  return 1
+}
+
 install_overlay() {
   local name="$1"
-  local src="$FRAMEWORK_SRC/project-overlays/$name"
+  local src
   local dest="$project_root/project-overlays/$name"
-  if [[ ! -d "$src" ]]; then
-    echo "ERROR: overlay 不存在: project-overlays/$name" >&2
+  if ! src="$(resolve_overlay_src "$name")"; then
+    echo "ERROR: 找不到 overlay '$name'。" >&2
+    echo "  在业务仓维护 project-overlays/$name/，或设置 OVERLAY_SRC 指向 overlay 父目录。" >&2
+    echo "  框架仅提供无业务语义的 templates/overlay/sample/ 脚手架。" >&2
     exit 1
   fi
-  log_action "==> overlay: $name -> $dest"
+  log_action "==> overlay: $name ($src -> $dest)"
   copy_tree "$src" "$dest"
 }
 
@@ -147,8 +164,11 @@ init_agents_md() {
   log_action "==> 生成 AGENTS.md 自模板"
   [[ $DRY_RUN -eq 0 ]] && cp "$template" "$guide"
   for name in "${OVERLAYS[@]+"${OVERLAYS[@]}"}"; do
-    local fragment="$FRAMEWORK_SRC/project-overlays/$name/AGENTS.fragment.md"
-    if [[ -f "$fragment" ]]; then
+    local fragment=""
+    if src="$(resolve_overlay_src "$name" 2>/dev/null)" && [[ -f "$src/AGENTS.fragment.md" ]]; then
+      fragment="$src/AGENTS.fragment.md"
+    fi
+    if [[ -n "$fragment" ]]; then
       log_action "==> 追加 overlay 片段: $name"
       if [[ $DRY_RUN -eq 0 ]]; then
         {

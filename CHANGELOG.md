@@ -2,11 +2,23 @@
 
 本仓库遵循 [Semantic Versioning](https://semver.org/)。
 
+## [0.3.1] - 2026-06-16
+
+### Removed
+
+- **project-overlays/ctq-ios/**：框架仓不再包含任何 CTQ IM/RTC 业务 overlay。
+
+### Changed
+
+- overlay 由**业务仓**维护；安装时通过 `OVERLAY_SRC` 或业务仓 `project-overlays/` 解析。
+- 框架仅保留无业务语义的 **`templates/overlay/sample/`** 脚手架。
+- `AGENTS.md.example`、Skill、README 去除 IM/RTC/CTQ 业务引用。
+
 ## [0.3.0] - 2026-06-16
 
 ### Added
 
-- **project-overlays/**：业务域与框架解耦；内置 `ctq-ios`（IM/RTC 分层 + OC 编码规范）。
+- **project-overlays/**：业务 overlay 约定（**不含业务内容**；CTQ 等由业务仓自建）。
 - **install 增强**：`--init-agents`、`--overlay NAME`、`--check`、`--dry-run`。
 - **scripts/reconcile-check.sh**：对照 `git diff` 与 `developer.implementation.md` §4/§8。
 - **references/guide/path-conventions.md**、**layering.md**；可配置 **check-run-patterns.txt**。
@@ -15,7 +27,7 @@
 
 ### Changed
 
-- **plan / develop Skill**：CTQ 细则迁至 overlay；框架层改为通用占位 + 相对路径链接。
+- **plan / develop Skill**：业务细则迁出框架；框架层为通用占位 + overlay 约定。
 - **grading.md**：L3 硬例子改为通用表述。
 - **check-run.sh**：plan 过时标记从 overlay/manifest  patterns 文件读取。
 - **export-distribution-layout.sh**：包含 `project-overlays/`；plugin 版本跟随 manifest。
