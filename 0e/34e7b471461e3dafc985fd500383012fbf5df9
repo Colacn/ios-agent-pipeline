@@ -1,0 +1,19 @@
+scripts/install-framework-to-project.sh
+  s_86888079cec29b::t_0b4472a60462f0 1-132
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "0e34e7b471461e3dafc985fd500383012fbf5df9",
+  "prompts": {},
+  "sessions": {
+    "s_86888079cec29b": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "372ff577-e886-461c-aeda-d8211b64a7f1",
+        "model": "default"
+      },
+      "human_author": "lixiuwei <lixiuwei1121@gmail.com>"
+    }
+  }
+}
