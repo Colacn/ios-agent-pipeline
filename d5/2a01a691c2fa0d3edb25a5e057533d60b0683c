@@ -1,0 +1,29 @@
+scripts/ingest-external-to-inputs.sh
+  s_fc1231bf4cada5::t_d3137a62cfe8f9 26
+scripts/install-framework-to-project.sh
+  s_fc1231bf4cada5::t_3a0c8300ce4936 185-196
+scripts/record-urls-to-inputs.sh
+  s_fc1231bf4cada5::t_421def86c8561d 17
+scripts/reconcile-check.sh
+  s_fc1231bf4cada5::t_9c94957c06b81e 17
+scripts/bootstrap-run.sh
+  s_fc1231bf4cada5::t_747f5847e5b7d0 16
+scripts/check-run.sh
+  s_fc1231bf4cada5::t_6f729ecde2bc88 18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "d52a01a691c2fa0d3edb25a5e057533d60b0683c",
+  "prompts": {},
+  "sessions": {
+    "s_fc1231bf4cada5": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "ec54db4e-4979-45aa-b57c-43d984f8f3a3",
+        "model": "default"
+      },
+      "human_author": "lixiuwei <lixiuwei1121@gmail.com>"
+    }
+  }
+}
