@@ -81,6 +81,7 @@ ios-agent-pipeline/
 
 | Doc | Description |
 |-----|-------------|
+| [**SESSION-HANDOFF.md**](docs/SESSION-HANDOFF.md) | **新会话背景包**（复制提示词给 Chat） |
 | [cross-platform-deployment.md](references/guide/cross-platform-deployment.md) | Multi-IDE deployment |
 | [distribution.md](references/guide/distribution.md) | Publish channels |
 | [installation.md](references/guide/installation.md) | Migration checklist |
