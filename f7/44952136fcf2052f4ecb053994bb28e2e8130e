@@ -1,0 +1,21 @@
+scripts/install-framework-to-project.sh
+  s_fc1231bf4cada5::t_0821b708405514 185-192
+.github/workflows/ci.yml
+  s_fc1231bf4cada5::t_4a28ea5f92434c 17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "f744952136fcf2052f4ecb053994bb28e2e8130e",
+  "prompts": {},
+  "sessions": {
+    "s_fc1231bf4cada5": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "ec54db4e-4979-45aa-b57c-43d984f8f3a3",
+        "model": "default"
+      },
+      "human_author": "lixiuwei <lixiuwei1121@gmail.com>"
+    }
+  }
+}
