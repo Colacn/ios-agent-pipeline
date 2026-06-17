@@ -1,0 +1,64 @@
+references/guide/installation.md
+  s_fc1231bf4cada5::t_4b6852cb1078b5 20-21
+  s_fc1231bf4cada5::t_3b669b37ed4a17 37,40
+README.md
+  s_fc1231bf4cada5::t_e8a5e77c8eb330 21
+  s_fc1231bf4cada5::t_8fab7a3366832c 71
+  s_fc1231bf4cada5::t_6a28f09a74ec96 79-80
+  s_fc1231bf4cada5::t_0607e463c086fb 1,3,22,29-30,36,42,72,76,83,89
+agents/developer.md
+  s_fc1231bf4cada5::t_500d34ed89b2b3 3
+scripts/export-distribution-layout.sh
+  s_fc1231bf4cada5::t_d818c79833b21d 46
+  s_fc1231bf4cada5::t_4f985e9e8d7c13 57,59-60,62,68,77-78,85
+  s_fc1231bf4cada5::t_6a191f0b3762fa 2,10,13
+scripts/install-skill.sh
+  s_fc1231bf4cada5::t_1955905e7c295f 9
+  s_fc1231bf4cada5::t_1fdb0cee1d0d70 5-7
+CHANGELOG.md
+  s_fc1231bf4cada5::t_fecefce4e32b7e 20
+references/guide/cross-platform-deployment.md
+  s_fc1231bf4cada5::t_b2b3054182407e 51
+  s_fc1231bf4cada5::t_444195c269322a 94
+scripts/install-framework-to-project.sh
+  s_fc1231bf4cada5::t_aa0b1a894acbf5 5
+  s_fc1231bf4cada5::t_70c0c3c282dd74 48
+  s_fc1231bf4cada5::t_8ea0ef36918285 202-203
+.cursor-plugin/plugin.json
+  s_fc1231bf4cada5::t_b8a5b3922fc97c 2-5,7
+references/guide/skills-ecosystem-alignment.md
+  s_fc1231bf4cada5::t_0383a4a1d68b40 44
+  s_fc1231bf4cada5::t_d185cf66b33180 24,29
+templates/project/AGENTS.md.example
+  s_fc1231bf4cada5::t_f3a93862eef4ca 262-263
+  s_fc1231bf4cada5::t_443c3920d33650 182
+  s_fc1231bf4cada5::t_aa2f54375d415d 3
+LICENSE
+  s_fc1231bf4cada5::t_62c2558df199a1 3
+agents/tester.md
+  s_fc1231bf4cada5::t_8da337bf553f0e 3
+skills/test/SKILL.md
+  s_fc1231bf4cada5::t_28e865dfd9ca0a 3
+framework.manifest.json
+  s_fc1231bf4cada5::t_b4b59510db8dd9 2-4,11,25
+references/guide/distribution.md
+  s_fc1231bf4cada5::t_7095c982d6c28e 10,13,21,24,28,48-49,65-67,73-74,87,93
+references/guide/path-conventions.md
+  s_fc1231bf4cada5::t_104d4d18eb7878 9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "e707d7c2f701223d7ace34f9cd4557179ec355af",
+  "prompts": {},
+  "sessions": {
+    "s_fc1231bf4cada5": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "ec54db4e-4979-45aa-b57c-43d984f8f3a3",
+        "model": "default"
+      },
+      "human_author": "lixiuwei <lixiuwei1121@gmail.com>"
+    }
+  }
+}
