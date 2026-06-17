@@ -2,6 +2,18 @@
 
 本仓库遵循 [Semantic Versioning](https://semver.org/)。
 
+## [0.6.0] - 2026-06-17
+
+### Changed
+
+- **Agent Skills 主流对齐**：每个 pipeline skill 自包含 `references/`、`scripts/`、`assets/`（符合 [agentskills.io](https://agentskills.io/specification)）。
+- `npx skills add Colacn/agent-pipeline@analyze` 即可运行，无需额外 shared bundle。
+- 新增 `scripts/sync-skill-vendor.sh`：从根 `references/`、`scripts/` 同步到各 skill。
+- `install-framework-to-project.sh` 默认只装自包含 skills + agents + 项目工具脚本；`--with-legacy-bundle` 恢复旧根级 references/scripts/templates。
+- `resolve-repo-root.sh` 优先用 git 仓库根（支持全局 skills 目录执行脚本）。
+- README / AGENTS 模板 / agents 路径改为 skill 内相对资源。
+- `framework.manifest.json` / `.cursor-plugin/plugin.json` → v0.6.0。
+
 ## [0.5.0] - 2026-06-16
 
 ### Removed

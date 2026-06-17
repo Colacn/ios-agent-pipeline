@@ -1,18 +1,22 @@
 ---
 name: review
 description: Use this skill when evaluating analyze/plan outputs before implementation, especially for feasibility, risk, security, performance, compatibility, and testability gates. It produces evidence-based pass, conditional pass, or fail conclusions.
+compatibility: Requires bash and git in the business repository.
+metadata:
+  author: agent-pipeline
+  version: "0.6.0"
 ---
 
 # Review
 
 ## Instructions
 
-1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)（**优先通读**）。落盘 `outputs/review.gate.md` 前，若工区不存在，执行 [`../../scripts/bootstrap-run.sh`](../../scripts/bootstrap-run.sh) `<slug>`。
+1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)（**优先通读**）。落盘 `outputs/review.gate.md` 前，若工区不存在，执行 [`scripts/bootstrap-run.sh`](scripts/bootstrap-run.sh) `<slug>`。
 2. **Inputs**：`analyze` + `plan` 产出；补充人类约束（窗口、合规、性能等）。
-3. **分层对照**：[`../plan/SKILL.md`](../plan/SKILL.md) 附录 A + 项目 overlay（若有）。
+3. **分层对照**：[`references/layering-appendix-a.md`](references/layering-appendix-a.md) + 项目 overlay（若有）。
 4. **Ruling**：给出 `通过` / `有条件通过` / `不通过`；关键发现须带**证据**与阻塞性；必改 vs 建议分离。
 5. Heavy reviews：可按 execution-playbook「多视角评审（可选）」组织。
-6. **流水线硬门禁**：项目根 `AGENTS.md` + [`../../references/workflow/pipeline.md`](../../references/workflow/pipeline.md)。
+6. **流水线硬门禁**：项目根 `AGENTS.md` + [`references/workflow-pipeline.md`](references/workflow-pipeline.md)。
 7. **极简需求清单的闸门**（**analyze** 产出为短表时）：若需求清单为**短编号条**，须核对 `plan` 是否已有 **§0 对表索引** 且**每条**在**后文设计/范围/测试等章节**中可找到可验收落点，避免「需求只有四条、方案缺了条数/分档/兼容」类缺口；**不**以单独「§0.1 细则承接」大段与正文是否重复为替代标准。对照 `plan` Skill 第 8 条与 `analyze` 需求清单体例。
 
 ## On-demand references（按需读取）
@@ -37,4 +41,4 @@ description: Use this skill when evaluating analyze/plan outputs before implemen
 ## Related rules
 
 - 项目根 `AGENTS.md`
-- [`../develop/SKILL.md`](../develop/SKILL.md) Appendix
+- [`references/collaboration-discipline.md`](references/collaboration-discipline.md)

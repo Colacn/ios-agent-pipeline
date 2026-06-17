@@ -81,7 +81,7 @@
 
 ## 路由决策（analyze 首轮）
 
-按 [`../../../references/workflow/grading.md`](../../../references/workflow/grading.md) 与 [`../../../references/workflow/light-task.md`](../../../references/workflow/light-task.md) 判定后，**在对话或落盘文首**输出下列块（L1 轻量可仅对话，不落 `runs/`）：
+按 [`references/workflow-grading.md`](references/workflow-grading.md) 与 [`references/workflow-light-task.md`](references/workflow-light-task.md) 判定后，**在对话或落盘文首**输出下列块（L1 轻量可仅对话，不落 `runs/`）：
 
 ```markdown
 ## 路由决策

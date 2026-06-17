@@ -1,59 +1,46 @@
 # 与 skills.sh / Agent Skills 标准对照
 
-> 规范来源：[agentskills.io/specification](https://agentskills.io/specification) · 生态入口：[skills.sh](https://skills.sh/)
+> 规范：[agentskills.io/specification](https://agentskills.io/specification) · 目录：[skills.sh/Colacn/agent-pipeline](https://skills.sh/Colacn/agent-pipeline)
 
-## 热门 skill 的典型结构
-
-skills.sh 排行靠前的 skill（如 `brainstorming`、`test-driven-development`、`systematic-debugging`）多为**单能力、自包含**目录：
+## 主流 skill 结构（本仓已对齐）
 
 ```text
-skill-name/
-├── SKILL.md          # 必需：YAML frontmatter + 指令正文
-├── references/       # 可选：按需加载的长文档
-├── scripts/          # 可选：可执行脚本（跑输出，不整文件进上下文）
-└── assets/           # 可选：模板、schemas、静态资源
+skills/<name>/
+├── SKILL.md          # 必需：YAML frontmatter + 指令
+├── references/       # 按需加载（含 vendored workflow-pipeline.md 等）
+├── scripts/          # bootstrap-run、check-run …
+└── assets/           # 模板、overlay 脚手架（plan/develop）
 ```
 
-设计原则：**渐进式披露** — 启动时只加载 `name` + `description`；激活后读 `SKILL.md`；细节在 `references/` / `scripts/` / `assets/`。
+**渐进式披露**：启动时 `name` + `description`；激活后 `SKILL.md`；细节在 `references/` / `scripts/` / `assets/`。
 
-## 本仓库的定位（流水线 bundle）
+## 安装（主流）
 
-本仓是 **五阶段流水线整包**，不是单个 skill：
+```bash
+# 推荐：skills.sh CLI（需 Node.js / npx）
+npx skills add Colacn/agent-pipeline@analyze -a cursor -y
+npx skills add Colacn/agent-pipeline@plan -g -y
 
-```text
-agent-pipeline/
-├── skills/           # analyze | plan | review | develop | test（各符合 SKILL.md 标准）
-├── references/       # 跨阶段公共规则（pipeline、grading、runs…）
-├── scripts/          # 跨阶段 bash（bootstrap、check-run、install）
-├── templates/        #  bundle 级 assets（≈ 标准中的 assets/）
-└── agents/           # Cursor 薄路由（非 skills.sh 标准；IDE 适配层）
+# 备选：Git + bash（无 Node）
+bash /path/to/agent-pipeline/scripts/install-skill.sh analyze cursor
 ```
 
-| 标准目录 | 本仓对应 | 说明 |
-|----------|----------|------|
-| `SKILL.md` | `skills/<stage>/SKILL.md` | 每阶段独立 skill，可 `npx skills add owner/repo@analyze` |
-| `references/` | `skills/*/references/` + 根 `references/` | 阶段细则在 skill 内；公共规则在根（install 后同级） |
-| `scripts/` | 根 `scripts/` | 共享脚本；**不在** skill 下重复转发 |
-| `assets/` | `templates/` | 交付模板、overlay 脚手架 |
+| 方式 | 得到什么 |
+|------|----------|
+| `npx skills add …@analyze` | **仅**自包含 `skills/analyze/` → 落盘到 `.cursor/skills/analyze/` 等 |
+| `install-skill.sh` | 同上 skill + 对应 agent + `.cursor/scripts/install-*.sh` |
+| `install-framework-to-project.sh` | 全部 5 skill + agents + 安装工具脚本 |
+| `--with-legacy-bundle` | 额外根级 `references/`、`scripts/`、`templates/`（旧布局） |
 
-## 安装方式对照
+## 维护者工作流
 
-| 方式 | 得到什么 | 适用 |
-|------|----------|------|
-| `install-skill.sh analyze` | 单个 skill + 对应 agent + references/scripts/templates | **skills.sh 风格单阶段部署** |
-| `install-framework-to-project.sh` | 全部 skills + agents + 共享 bundle | **完整流水线** |
-| `npx skills add …@analyze` | 通常仅 skill 目录 | 发现、全局 skills；需另装 bundle |
+1. 修改 canonical 源：`references/workflow/`、`scripts/`、`templates/vendor/`。
+2. 执行 `bash scripts/sync-skill-vendor.sh` 同步到 `skills/*/`.
+3. 提交 skill 目录变更（skills.sh 从 Git 拉取的是 `skills/<name>/`）。
 
-单 skill 安装通过 `install-skill.sh`（或 `install-framework-to-project.sh --skill NAME`）**会**带上 `references/workflow/pipeline.md` 等公共规则与 `scripts/`；多次安装会合并到同一 `.cursor/` 目录。
+## 跨 skill 引用
 
-##  authoring 建议（对齐热门 skill）
-
-1. **SKILL.md 保持短**：入口 + 步骤 + 指向 `references/execution-playbook.md`（本仓已采用）。
-2. **description 写清 WHEN**：Agent 靠它决定是否触发（frontmatter 最关键字段）。
-3. **长 SOP 放 references/**：execution-playbook、checklist 等按需读。
-4. **脚本放根 scripts/**：避免 skill 内重复 wrapper。
-5. **模板放 templates/**：等同 assets/；develop 模板见 `templates/developer-implementation-template.md`。
-6. **项目 overlay**：在**应用仓** `project-overlays/` 维护，见 [`templates/overlay/README.md`](../../templates/overlay/README.md)。
+主流模式**不**依赖 `../plan/SKILL.md` 等兄弟 skill。本仓将附录 A、协作纪律等 **vendored** 到各 skill 的 `references/`（`layering-appendix-a.md`、`collaboration-discipline.md`）。
 
 ## 相关文档
 

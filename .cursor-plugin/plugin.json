@@ -1,8 +1,8 @@
 {
   "name": "agent-pipeline",
-  "version": "0.5.0",
-  "description": "IDE-agnostic software R&D agent pipeline (analyze → plan → review → develop → test). Install project bundle via scripts/install-framework-to-project.sh for full references/scripts.",
-  "keywords": ["agent", "pipeline", "workflow", "skills", "software"],
+  "version": "0.6.0",
+  "description": "Self-contained Agent Skills pipeline (analyze → plan → review → develop → test). Install via npx skills add Colacn/agent-pipeline@analyze or install-framework-to-project.sh.",
+  "keywords": ["agent", "pipeline", "workflow", "skills", "software", "agent-skills"],
   "skills": "skills",
   "agents": "agents"
 }

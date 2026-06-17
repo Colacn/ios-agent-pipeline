@@ -45,11 +45,11 @@
 3. 存在阻塞项时先 `AskQuestion`。
 4. 默认不写实现代码（除非用户明确要求）。
 5. 本轮收尾必须交付《技术方案》文档（正文或落盘路径）。
-6. 通用门禁（定稿去痕/局部修订/先问后写）遵循 `references/workflow/pipeline.md`。
+6. 通用门禁（定稿去痕/局部修订/先问后写）遵循 [`workflow-pipeline.md`](workflow-pipeline.md)。
 
 ## AskQuestion 主动澄清规则（硬性）
 
-触发条件与流程遵循 `references/workflow/pipeline.md`；本 Skill 重点澄清分层落点、依赖约束、验收可评审性。
+触发条件与流程遵循 [`workflow-pipeline.md`](workflow-pipeline.md)；本 Skill 重点澄清分层落点、依赖约束、验收可评审性。
 
 ## 流水线中的本步（详细版）
 

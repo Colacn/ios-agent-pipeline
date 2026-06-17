@@ -1,98 +1,110 @@
 # agent-pipeline
 
-**IDE-agnostic** document-driven agent pipeline for software R&D teams:
+Document-driven agent pipeline for software R&D teams:
 
 `analyze → plan → review → develop → test`
 
-Install into **Cursor**, **Claude Code**, **Codex**, or any editor that supports [Agent Skills](https://skills.sh/). No Superpowers or other third-party plugin required.
+符合 [Agent Skills 开放规范](https://agentskills.io/specification)：每个阶段为**自包含 skill**（`SKILL.md` + `references/` + `scripts/` + `assets/`），可通过 [skills.sh](https://skills.sh/Colacn/agent-pipeline) / `npx skills add` 安装到 **Cursor**、**Claude Code**、**Codex** 等 60+ Agent。
 
 ## Features
 
-- Five pipeline skills with shared evidence baseline (`runs/<slug>/outputs/`)
-- Bash scripts: bootstrap runs, ingest inputs, check outputs naming
-- Subagent thin routing (`analyst` ↔ `analyze`, etc.)
-- Optional Cursor Marketplace plugin manifest (`.cursor-plugin/`)
+- 五阶段流水线 skill，证据基线 `runs/<slug>/outputs/`
+- 每 skill 自带 `scripts/`（bootstrap、check-run 等）
+- Subagent 薄路由（`analyst` ↔ `analyze` 等）
+- 可选 Cursor Marketplace 插件清单（`.cursor-plugin/`）
 
-## Quick start
+## Quick start（主流：skills.sh）
 
-In your **application repository root**:
+在**业务仓库根目录**（需 Node.js / `npx`）：
+
+```bash
+npx skills add Colacn/agent-pipeline@analyze -a cursor -y
+npx skills add Colacn/agent-pipeline@plan -a cursor -y   # 按需追加阶段
+```
+
+验证：
+
+```bash
+bash .cursor/skills/analyze/scripts/bootstrap-run.sh smoke-test
+bash .cursor/skills/develop/scripts/check-run.sh smoke-test
+```
+
+## 备选：Git 安装脚本
+
+无需 Node 时，clone 后用 bash 安装（同样安装自包含 skill + agents + 项目工具脚本）：
 
 ```bash
 git clone https://github.com/Colacn/agent-pipeline.git /tmp/agent-pipeline
+cd your-app
 bash /tmp/agent-pipeline/scripts/install-framework-to-project.sh cursor --init-agents --check
-# 业务 overlay 在业务仓自建 project-overlays/ 后：--overlay <name>
 ```
 
-**只装某一阶段**（含 references/scripts/templates 共享 bundle，与 skills.sh 单 skill 体验一致）：
+单阶段：
 
 ```bash
 bash /tmp/agent-pipeline/scripts/install-skill.sh analyze cursor
-bash /tmp/agent-pipeline/scripts/install-skill.sh analyze plan develop cursor
 ```
 
-Install for multiple IDEs at once:
+多 IDE：
 
 ```bash
 bash /tmp/agent-pipeline/scripts/install-framework-to-project.sh all
 ```
 
-Optional global skills (Claude Code / Codex):
+全局 skills（Claude / Codex）：
 
 ```bash
 INSTALL_GLOBAL=1 bash /tmp/agent-pipeline/scripts/install-framework-to-project.sh claude codex
 ```
 
-Then add a project guide file (`AGENTS.md` or `CLAUDE.md`) linking to `references/workflow/pipeline.md`. See [`templates/project/AGENTS.md.example`](templates/project/AGENTS.md.example).
+项目指南：从 [`templates/project/AGENTS.md.example`](templates/project/AGENTS.md.example) 生成 `AGENTS.md`。
 
-Verify:
+框架仓冒烟：
 
 ```bash
-bash .cursor/scripts/bootstrap-run.sh smoke-test
-bash .cursor/scripts/check-run.sh smoke-test
-bash scripts/smoke-test.sh   # 框架仓：repo_root + 安装布局冒烟
+bash scripts/smoke-test.sh
 ```
 
 ## Install targets
 
-| Target | Project path | Guide file |
-|--------|--------------|------------|
-| `cursor` | `.cursor/` | `AGENTS.md` |
-| `claude` | `.claude/` | `CLAUDE.md` |
-| `codex` | `.codex/agent-workflow/` | `AGENTS.md` |
-| `neutral` | `agent-workflow/` | `AGENTS.md` |
+| Target | Skill 路径 | Guide file |
+|--------|------------|------------|
+| `cursor` | `.cursor/skills/<name>/` | `AGENTS.md` |
+| `claude` | `.claude/skills/<name>/` | `CLAUDE.md` |
+| `codex` | `.codex/skills/<name>/`（全局）或项目 bundle | `AGENTS.md` |
+| `neutral` | `agent-workflow/skills/<name>/` | `AGENTS.md` |
 
-## skills.sh / 单 skill 安装
-
-Browse [skills.sh](https://skills.sh/). 两种方式：
+## 安装方式对照
 
 | 方式 | 命令 | 得到什么 |
 |------|------|----------|
-| **本仓 install-skill** | `bash …/scripts/install-skill.sh analyze cursor` | skill + agent + references/scripts/templates |
-| **skills.sh 生态** | `npx skills add Colacn/agent-pipeline@analyze` | 通常仅 skill 目录；需另装共享 bundle |
-| **整包** | `install-framework-to-project.sh cursor` | 全部 skills + agents + 共享 bundle |
+| **skills.sh（推荐）** | `npx skills add Colacn/agent-pipeline@analyze` | 自包含 skill 目录 |
+| **install-skill.sh** | `bash …/install-skill.sh analyze cursor` | skill + agent + 安装工具脚本 |
+| **整包** | `install-framework-to-project.sh cursor` | 全部 5 skill + agents + 安装工具脚本 |
+| **legacy bundle** | 上述命令 + `--with-legacy-bundle` | 额外复制根 `references/scripts/templates`（旧布局） |
 
-```bash
-# 推荐：单阶段 + 可运行共享 bundle
-bash /tmp/agent-pipeline/scripts/install-skill.sh analyze cursor
+## 单 skill 目录结构（Agent Skills 标准）
 
-# 或 skills.sh（发现/全局 skills 目录）
-npx skills add Colacn/agent-pipeline@analyze
-npx skills add Colacn/agent-pipeline@plan
-
-# 整包
-bash /tmp/agent-pipeline/scripts/install-framework-to-project.sh cursor
+```text
+skills/analyze/
+├── SKILL.md
+├── references/          # workflow-pipeline.md、execution-playbook.md …
+├── scripts/               # bootstrap-run.sh、ingest …
+└── assets/                # 可选
 ```
 
-## Repository layout
+维护者修改根 `references/workflow/` 或 `scripts/` 后，执行 `bash scripts/sync-skill-vendor.sh` 同步到各 skill。
+
+## Repository layout（框架仓）
 
 ```text
 agent-pipeline/
 ├── framework.manifest.json
-├── skills/
-├── agents/
-├── references/
-├── scripts/
-├── templates/                # assets：交付模板、overlay/sample
+├── skills/                # 发布到 skills.sh 的 5 个自包含 skill
+├── agents/                # Cursor 等 Subagent 薄路由（非 skills.sh 标准）
+├── references/            # 维护者 canonical 源（sync 到 skills/*/references）
+├── scripts/               # 维护者工具 + sync-skill-vendor.sh
+├── templates/
 └── .cursor-plugin/
 ```
 
@@ -100,16 +112,13 @@ agent-pipeline/
 
 | Doc | Description |
 |-----|-------------|
-| [CHANGELOG.md](CHANGELOG.md) | 版本变更记录 |
-| [cross-platform-deployment.md](references/guide/cross-platform-deployment.md) | Multi-IDE deployment |
-| [distribution.md](references/guide/distribution.md) | Publish channels |
-| [installation.md](references/guide/installation.md) | Migration checklist |
-| [skill-subagent.md](references/guide/skill-subagent.md) | Skill vs Subagent names |
-| [skills-ecosystem-alignment.md](references/guide/skills-ecosystem-alignment.md) | 与 skills.sh / Agent Skills 标准对照 |
-| [path-conventions.md](references/guide/path-conventions.md) | 框架仓 vs 安装后路径 |
-| [pipeline.md](references/workflow/pipeline.md) | Pipeline rules |
+| [CHANGELOG.md](CHANGELOG.md) | 版本变更 |
+| [skills-ecosystem-alignment.md](references/guide/skills-ecosystem-alignment.md) | Agent Skills / skills.sh 对照 |
+| [distribution.md](references/guide/distribution.md) | 发布渠道 |
+| [installation.md](references/guide/installation.md) | 迁移清单 |
+| [pipeline.md](references/workflow/pipeline.md) | 流水线规则（canonical；skill 内为 `workflow-pipeline.md`） |
 
-## Output naming (Skill names, not Subagent names)
+## Output naming
 
 | Stage | Output file |
 |-------|-------------|

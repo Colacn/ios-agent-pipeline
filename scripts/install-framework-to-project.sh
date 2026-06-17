@@ -9,8 +9,9 @@
 #
 # options:
 #   --bundle          安装整包（默认；显式指定时可覆盖先前的 --skill）
-#   --skill NAME      仅安装指定 skill + 最小共享 bundle（可重复）
+#   --skill NAME      仅安装指定 skill + agent + 项目工具脚本（可重复）
 #   --skills A,B,C    同 --skill，逗号分隔
+#   --with-legacy-bundle  额外复制根 references/scripts/templates（旧 bundle 布局，非 skills.sh 主流）
 #   --list-skills     列出可安装的 pipeline skill 并退出
 #   --init-agents     若不存在则从 templates/project/AGENTS.md.example 生成 AGENTS.md
 #   --overlay NAME    安装 project-overlays/NAME 到业务仓 project-overlays/NAME
@@ -37,6 +38,7 @@ OVERLAYS=()
 targets=()
 INSTALL_MODE=bundle
 SELECTED_SKILLS=()
+WITH_LEGACY_BUNDLE=0
 
 usage() {
   cat <<EOF
@@ -45,10 +47,11 @@ usage() {
 target: cursor | claude | codex | neutral | all  （默认 cursor）
 
 安装范围:
-  （默认）            整包：全部 skills + agents + references + scripts + templates
-  --skill NAME        单个或多个 skill + 最小共享 bundle（references/scripts/templates + 对应 agent）
+  （默认）            整包：全部自包含 skills + agents + 项目工具脚本
+  --skill NAME        单个或多个 skill + agent + 项目工具脚本
   --skills A,B,C      同 --skill，逗号分隔
   --bundle            显式整包（覆盖 --skill）
+  --with-legacy-bundle 额外安装根 references/scripts/templates（兼容旧路径）
   --list-skills       列出 pipeline skill 名称
 
 options:
@@ -96,6 +99,10 @@ while [[ $# -gt 0 ]]; do
     --overlay)
       OVERLAYS+=("${2:?--overlay 需要名称}")
       shift 2
+      ;;
+    --with-legacy-bundle)
+      WITH_LEGACY_BUNDLE=1
+      shift
       ;;
     -h | --help)
       usage
@@ -164,6 +171,30 @@ install_shared_bundle() {
   merge_component templates "$dest_root"
 }
 
+install_project_tooling() {
+  local dest_root="$1"
+  local tooling_scripts=(
+    install-framework-to-project.sh
+    install-skill.sh
+    smoke-test.sh
+    export-distribution-layout.sh
+    sync-skill-vendor.sh
+  )
+  local s
+  [[ $DRY_RUN -eq 0 ]] && mkdir -p "$dest_root/scripts/lib"
+  for s in "${tooling_scripts[@]}"; do
+    copy_file "$FRAMEWORK_SRC/scripts/$s" "$dest_root/scripts/$s"
+  done
+  copy_tree "$FRAMEWORK_SRC/scripts/lib" "$dest_root/scripts/lib"
+}
+
+chmod_skill_scripts() {
+  local dest_root="$1"
+  [[ $DRY_RUN -eq 1 ]] && return 0
+  find "$dest_root/skills" -type f -path '*/scripts/*.sh' -exec chmod +x {} + 2>/dev/null || true
+  find "$dest_root/skills" -type f -path '*/scripts/lib/*.sh' -exec chmod +x {} + 2>/dev/null || true
+}
+
 install_selected_skills() {
   local dest_root="$1"
   local skill agent
@@ -190,6 +221,7 @@ chmod_installed_scripts() {
   [[ $DRY_RUN -eq 1 ]] && return 0
   chmod +x "$dest_root/scripts/"*.sh 2>/dev/null || true
   chmod +x "$dest_root/scripts/lib/"*.sh 2>/dev/null || true
+  chmod_skill_scripts "$dest_root"
 }
 
 install_to_dir() {
@@ -199,14 +231,22 @@ install_to_dir() {
   [[ $DRY_RUN -eq 0 ]] && mkdir -p "$dest_root"
 
   if [[ "$INSTALL_MODE" == "bundle" ]]; then
-    log_action "    模式: 整包（全部 skills + agents）"
-    for c in skills agents references scripts templates; do
-      merge_component "$c" "$dest_root"
-    done
+    log_action "    模式: 整包（全部自包含 skills + agents）"
+    merge_component skills "$dest_root"
+    merge_component agents "$dest_root"
+    install_project_tooling "$dest_root"
+    if [[ $WITH_LEGACY_BUNDLE -eq 1 ]]; then
+      log_action "    附加: legacy bundle（references/scripts/templates）"
+      install_shared_bundle "$dest_root"
+    fi
   else
-    log_action "    模式: 选定 skills（${SELECTED_SKILLS[*]}）+ 共享 bundle"
+    log_action "    模式: 选定 skills（${SELECTED_SKILLS[*]}）+ agents + 项目工具脚本"
     install_selected_skills "$dest_root"
-    install_shared_bundle "$dest_root"
+    install_project_tooling "$dest_root"
+    if [[ $WITH_LEGACY_BUNDLE -eq 1 ]]; then
+      log_action "    附加: legacy bundle（references/scripts/templates）"
+      install_shared_bundle "$dest_root"
+    fi
   fi
 
   install_manifest "$dest_root"
@@ -359,17 +399,17 @@ if [[ $DRY_RUN -eq 0 ]]; then
   echo ""
   if [[ "$INSTALL_MODE" == "skills" ]]; then
     echo "安装完成（skill 模式: ${SELECTED_SKILLS[*]}）。验证示例："
-    echo "  bash .cursor/scripts/bootstrap-run.sh smoke-test"
-    echo "  bash .cursor/scripts/check-run.sh smoke-test"
-    echo "补装其他阶段: bash .cursor/scripts/install-skill.sh plan review"
+    echo "  bash .cursor/skills/analyze/scripts/bootstrap-run.sh smoke-test"
+    echo "  bash .cursor/skills/develop/scripts/check-run.sh smoke-test"
+    echo "补装其他阶段: npx skills add Colacn/agent-pipeline@plan  或  bash .cursor/scripts/install-skill.sh plan"
     echo "整包升级: bash .cursor/scripts/install-framework-to-project.sh cursor --bundle"
   else
     echo "安装完成（整包）。验证示例（Cursor 落盘为 .cursor/ 时）："
-    echo "  bash .cursor/scripts/bootstrap-run.sh smoke-test"
-    echo "  bash .cursor/scripts/check-run.sh smoke-test"
-    echo "  bash .cursor/scripts/reconcile-check.sh <slug>   # develop 出口后"
+    echo "  bash .cursor/skills/analyze/scripts/bootstrap-run.sh smoke-test"
+    echo "  bash .cursor/skills/develop/scripts/check-run.sh smoke-test"
+    echo "  bash .cursor/skills/develop/scripts/reconcile-check.sh <slug>   # develop 出口后"
   fi
-  echo "详见 references/guide/cross-platform-deployment.md"
+  echo "skills.sh 单 skill: npx skills add Colacn/agent-pipeline@analyze -a cursor -y"
 fi
 
 if [[ $RUN_CHECK -eq 1 && $DRY_RUN -eq 0 ]]; then

@@ -4,7 +4,7 @@
 完整 SOP：[`execution-playbook.md`](execution-playbook.md)。
 
 - 本 Skill 入口：[`../SKILL.md`](../SKILL.md)
-- 流水线路由与门禁：[`../../../../AGENTS.md`](../../../../AGENTS.md)
+- 流水线路由与门禁：项目根 `AGENTS.md` + [`references/workflow-pipeline.md`](workflow-pipeline.md)
 
 建议读取时机：
 

@@ -63,6 +63,10 @@ while [[ $# -gt 0 ]]; do
       forward+=("$1" "${2:?--overlay 需要名称}")
       shift 2
       ;;
+    --with-legacy-bundle)
+      forward+=("$1")
+      shift
+      ;;
     -h | --help)
       exec bash "$script_dir/install-skill.sh" --help
       ;;

@@ -1,7 +1,7 @@
 {
   "name": "agent-pipeline",
-  "version": "0.5.0",
-  "description": "IDE-agnostic document-driven agent pipeline for software R&D: analyze → plan → review → develop → test. Portable skills + references + scripts + templates.",
+  "version": "0.6.0",
+  "description": "Document-driven agent pipeline for software R&D: analyze → plan → review → develop → test. Each skill is self-contained per Agent Skills spec (SKILL.md + references/ + scripts/ + assets/).",
   "license": "MIT",
   "components": {
     "skills": "skills",
@@ -18,28 +18,35 @@
     "develop": "runs/<slug>/outputs/developer.implementation.md",
     "test": ["runs/<slug>/outputs/test.report.md", "runs/<slug>/outputs/test.ledger.md"]
   },
+  "skillLayout": {
+    "standard": "agentskills.io",
+    "selfContained": true,
+    "perSkill": ["SKILL.md", "references/", "scripts/", "assets/"],
+    "syncScript": "scripts/sync-skill-vendor.sh"
+  },
   "installTargets": {
     "cursor": {
       "projectDir": ".cursor",
       "projectGuide": "AGENTS.md",
-      "notes": "Cursor Marketplace plugin maps skills/agents into .cursor/"
+      "skillDir": ".cursor/skills",
+      "notes": "npx skills add Colacn/agent-pipeline@analyze -a cursor -y"
     },
     "claude-code": {
       "projectDir": ".claude",
       "projectGuide": "CLAUDE.md",
       "globalSkillsDir": "~/.claude/skills",
-      "notes": "Skills via Skill tool; keep references/scripts under project .claude/ tree"
+      "notes": "npx skills add … -a claude-code -g -y"
     },
     "codex": {
       "projectDir": ".codex/agent-workflow",
       "projectGuide": "AGENTS.md",
       "globalSkillsDir": "${CODEX_HOME:-~/.codex}/skills",
-      "notes": "Global skill discovery; project bundle holds references/scripts for relative paths"
+      "notes": "Global skill discovery; project bundle holds agents + install scripts"
     },
     "neutral": {
       "projectDir": "agent-workflow",
       "projectGuide": "AGENTS.md",
-      "notes": "Portable layout for git clone / skills.sh / custom IDE adapters"
+      "notes": "Portable layout for git clone / skills.sh"
     }
   },
   "skillInstall": {
@@ -50,14 +57,21 @@
       "develop": "developer",
       "test": "tester"
     },
-    "sharedBundle": ["references", "scripts", "templates"],
+    "projectExtras": ["agents", "scripts/install-framework-to-project.sh", "scripts/install-skill.sh", "scripts/smoke-test.sh"],
+    "legacyBundle": {
+      "optionalFlag": "--with-legacy-bundle",
+      "components": ["references", "scripts", "templates"],
+      "notes": "旧版根级 references/scripts/templates；默认不再安装"
+    },
     "scripts": {
       "installSkill": "scripts/install-skill.sh",
-      "installBundle": "scripts/install-framework-to-project.sh"
+      "installBundle": "scripts/install-framework-to-project.sh",
+      "syncVendor": "scripts/sync-skill-vendor.sh"
     }
   },
   "distribution": {
-    "skillsSh": "https://skills.sh/",
+    "skillsSh": "https://skills.sh/Colacn/agent-pipeline",
+    "skillsCli": "npx skills add Colacn/agent-pipeline@analyze",
     "cursorMarketplace": "https://cursor.com/marketplace/publish",
     "exportScript": "scripts/export-distribution-layout.sh",
     "installScript": "scripts/install-framework-to-project.sh",

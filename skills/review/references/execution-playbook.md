@@ -50,7 +50,7 @@ E. 待确认（仅阻塞项，完整列出）
 
 ## 定稿去痕与澄清
 
-- 定稿去痕、局部修订、过程项清理统一遵循 `references/workflow/pipeline.md`
+- 定稿去痕、局部修订、过程项清理统一遵循 [`workflow-pipeline.md`](workflow-pipeline.md)
 - 证据缺失、分级无法判定、口径冲突时必须先 `AskQuestion`
 
 ## 多视角评审（可选）

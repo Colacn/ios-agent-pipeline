@@ -91,7 +91,7 @@
 
 - 优先使用项目提供的脚本，而不是临时拼命令。
 - 如果项目里有 `scripts/`、`script/`、`Makefile`、`package.json`、`pyproject.toml`、`Cargo.toml`、`go.mod` 或类似工具文件，先阅读它们再选择命令。
-- 本仓库统一脚本入口见下文「脚本与模板入口」；流水线预处理见 `bash .cursor/scripts/bootstrap-run.sh`。
+- 本仓库统一脚本入口见下文「脚本与模板入口」；流水线预处理：`bash .cursor/skills/analyze/scripts/bootstrap-run.sh <slug>`。
 - 不要随意切换包管理器。
 - 没有明确理由时，不要添加或升级生产依赖。
 - 如果确实需要添加依赖，要说明为什么现有代码或标准库不够。
@@ -179,16 +179,13 @@
 
 ## 核心导航（30 秒上手）
 
-0. 跨 IDE 部署：[`.cursor/references/guide/cross-platform-deployment.md`](.cursor/references/guide/cross-platform-deployment.md)
-1. 仓库级稳定规则：[`.cursor/references/rules/stable-rules.md`](.cursor/references/rules/stable-rules.md)
-2. 复杂度分级与默认路由：[`.cursor/references/workflow/grading.md`](.cursor/references/workflow/grading.md)
-3. 流水线总规则（预处理/证据基线/跳步替代）：[`.cursor/references/workflow/pipeline.md`](.cursor/references/workflow/pipeline.md)
-4. 非流水线轻量任务：[`.cursor/references/workflow/light-task.md`](.cursor/references/workflow/light-task.md)
-5. 沟通与口径对齐：[`.cursor/references/workflow/communication.md`](.cursor/references/workflow/communication.md)
-6. runs 归档规则：[`.cursor/references/structure/runs-archive.md`](.cursor/references/structure/runs-archive.md)
-7. Skill/Subagent 使用：[`.cursor/references/guide/skill-subagent.md`](.cursor/references/guide/skill-subagent.md)
-8. 路径约定：[`.cursor/references/guide/path-conventions.md`](.cursor/references/guide/path-conventions.md)
-9. 维护约定：[`.cursor/references/guide/maintain.md`](.cursor/references/guide/maintain.md)
+0. 跨 IDE / skills.sh：各 skill 内 `references/path-conventions.md`；维护文档 [`.cursor/references/guide/cross-platform-deployment.md`](.cursor/references/guide/cross-platform-deployment.md)（`--with-legacy-bundle` 时可用）
+1. 复杂度分级：[`.cursor/skills/analyze/references/workflow-grading.md`](.cursor/skills/analyze/references/workflow-grading.md)
+2. 流水线总规则：[`.cursor/skills/analyze/references/workflow-pipeline.md`](.cursor/skills/analyze/references/workflow-pipeline.md)（各阶段 skill 均 vendored 同文件）
+3. 轻量任务：[`.cursor/skills/analyze/references/workflow-light-task.md`](.cursor/skills/analyze/references/workflow-light-task.md)
+4. Skill/Subagent：[`.cursor/skills/analyze/references/guide-skill-subagent.md`](.cursor/skills/analyze/references/guide-skill-subagent.md)
+5. 分层附录 A：[`.cursor/skills/plan/references/layering-appendix-a.md`](.cursor/skills/plan/references/layering-appendix-a.md)
+6. 协作纪律：[`.cursor/skills/develop/references/collaboration-discipline.md`](.cursor/skills/develop/references/collaboration-discipline.md)
 
 ---
 
@@ -253,21 +250,21 @@ bash .cursor/scripts/install-framework-to-project.sh cursor --init-agents --over
 
 ## 脚本与模板入口
 
-### 统一脚本入口
+### 统一脚本入口（自包含 skill 内）
 
-- `bash .cursor/scripts/bootstrap-run.sh <short-slug> [file1 file2 ...]`
-- `bash .cursor/scripts/ingest-external-to-inputs.sh [--move] <short-slug> <path...>`
-- `bash .cursor/scripts/record-urls-to-inputs.sh <short-slug> <url...>`
-- `bash .cursor/scripts/check-run.sh <short-slug>`（校验 outputs 命名与证据基线）
+- `bash .cursor/skills/analyze/scripts/bootstrap-run.sh <short-slug> [file1 file2 ...]`
+- `bash .cursor/skills/analyze/scripts/ingest-external-to-inputs.sh [--move] <short-slug> <path...>`
+- `bash .cursor/skills/analyze/scripts/record-urls-to-inputs.sh <short-slug> <url...>`
+- `bash .cursor/skills/develop/scripts/check-run.sh <short-slug>`
+- `bash .cursor/skills/develop/scripts/reconcile-check.sh <short-slug>`
 - `bash .cursor/scripts/install-framework-to-project.sh [cursor|claude|codex|neutral|all] [--init-agents] [--overlay NAME] [--skill NAME] [--check]`
 - `bash .cursor/scripts/install-skill.sh <skill> [cursor|claude|...]`
-- `bash .cursor/scripts/export-distribution-layout.sh <dir>`（导出 IDE 中立发布包）
+- `npx skills add Colacn/agent-pipeline@analyze -a cursor -y`（skills.sh 主流安装）
 
-### 模板
+### 模板（develop / plan skill assets）
 
-- 跳步替代留痕模板：[`.cursor/templates/skip-step-template.md`](.cursor/templates/skip-step-template.md)
-- 极简沟通模板：[`.cursor/templates/communication-template.md`](.cursor/templates/communication-template.md)
-- develop 实现交付模板：[`.cursor/templates/developer-implementation-template.md`](.cursor/templates/developer-implementation-template.md)
+- develop 实现交付：[`.cursor/skills/develop/assets/developer-implementation-template.md`](.cursor/skills/develop/assets/developer-implementation-template.md)
+- overlay 脚手架：[`.cursor/skills/plan/assets/overlay/README.md`](.cursor/skills/plan/assets/overlay/README.md)
 
 ---
 
@@ -279,13 +276,10 @@ bash .cursor/scripts/install-framework-to-project.sh cursor --init-agents --over
 ├── .cursor/
 │   ├── agents/
 │   ├── skills/
-│   ├── references/
-│   │   ├── workflow/
-│   │   ├── structure/
-│   │   ├── rules/
-│   │   └── guide/
-│   ├── scripts/
-│   └── templates/
+│   │   ├── analyze/          # SKILL.md + references/ + scripts/ + assets/
+│   │   ├── plan/
+│   │   └── …
+│   └── scripts/              # 仅 install / smoke 等项目工具脚本
 
 runs/<short-slug>/
 ├── inputs/

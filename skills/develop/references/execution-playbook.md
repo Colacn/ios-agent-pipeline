@@ -40,7 +40,7 @@
 3. 设计最小改动方案。
 4. 实现并保持错误语义/日志口径一致。
 5. 完成编译与关键验证并记录结果。
-6. 落盘 `runs/<slug>/outputs/developer.implementation.md`（模板见 `.cursor/templates/developer-implementation-template.md`）。
+6. 落盘 `runs/<slug>/outputs/developer.implementation.md`（模板见 [`assets/developer-implementation-template.md`](../../assets/developer-implementation-template.md)）。
 7. 执行 **reconcile-docs**（见下节）。
 8. 按交付结构回报。
 
