@@ -21,13 +21,12 @@ skill-name/
 本仓是 **五阶段流水线整包**，不是单个 skill：
 
 ```text
-ios-agent-pipeline/
+agent-pipeline/
 ├── skills/           # analyze | plan | review | develop | test（各符合 SKILL.md 标准）
 ├── references/       # 跨阶段公共规则（pipeline、grading、runs…）
 ├── scripts/          # 跨阶段 bash（bootstrap、check-run、install）
 ├── templates/        #  bundle 级 assets（≈ 标准中的 assets/）
-├── agents/           # Cursor 薄路由（非 skills.sh 标准；IDE 适配层）
-└── rules/            # Cursor rules（可选）
+└── agents/           # Cursor 薄路由（非 skills.sh 标准；IDE 适配层）
 ```
 
 | 标准目录 | 本仓对应 | 说明 |
@@ -42,7 +41,7 @@ ios-agent-pipeline/
 | 方式 | 得到什么 | 适用 |
 |------|----------|------|
 | `install-skill.sh analyze` | 单个 skill + 对应 agent + references/scripts/templates | **skills.sh 风格单阶段部署** |
-| `install-framework-to-project.sh` | 全部 skills + agents + rules + 共享 bundle | **完整流水线** |
+| `install-framework-to-project.sh` | 全部 skills + agents + 共享 bundle | **完整流水线** |
 | `npx skills add …@analyze` | 通常仅 skill 目录 | 发现、全局 skills；需另装 bundle |
 
 单 skill 安装通过 `install-skill.sh`（或 `install-framework-to-project.sh --skill NAME`）**会**带上 `references/workflow/pipeline.md` 等公共规则与 `scripts/`；多次安装会合并到同一 `.cursor/` 目录。

@@ -48,7 +48,7 @@
 
 ```bash
 # 从本 monorepo 或已 clone 的分发包
-bash /path/to/ios-agent-pipeline/scripts/install-framework-to-project.sh all
+bash /path/to/agent-pipeline/scripts/install-framework-to-project.sh all
 ```
 
 仅安装单一 IDE：
@@ -91,7 +91,7 @@ cp -R /tmp/agent-pipeline/skills /tmp/agent-pipeline/references ... <target-root
 从本仓库导出 IDE 中立目录（用于开源发布、skills 市场、内网镜像）：
 
 ```bash
-bash .cursor/scripts/export-distribution-layout.sh /path/to/ios-agent-pipeline-dist
+bash .cursor/scripts/export-distribution-layout.sh /path/to/agent-pipeline-dist
 ```
 
 产出含 `skills/`、`agents/`、`references/`、`scripts/`、`framework.manifest.json`、可选 `.cursor-plugin/`。

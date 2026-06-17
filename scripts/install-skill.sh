@@ -2,11 +2,11 @@
 # 安装一个或多个 pipeline skill（skills.sh 风格）+ 最小共享 bundle。
 #
 # 用法（在目标业务仓库根目录）：
-#   bash /path/to/ios-agent-pipeline/scripts/install-skill.sh analyze [cursor]
-#   bash /path/to/ios-agent-pipeline/scripts/install-skill.sh analyze plan develop claude --init-agents
-#   bash /path/to/ios-agent-pipeline/scripts/install-skill.sh --list
+#   bash /path/to/agent-pipeline/scripts/install-skill.sh analyze [cursor]
+#   bash /path/to/agent-pipeline/scripts/install-skill.sh analyze plan develop claude --init-agents
+#   bash /path/to/agent-pipeline/scripts/install-skill.sh --list
 #
-# 整包（全部 skills + rules）请用 install-framework-to-project.sh 或 --bundle。
+# 整包（全部 skills + agents）请用 install-framework-to-project.sh 或 --bundle。
 set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

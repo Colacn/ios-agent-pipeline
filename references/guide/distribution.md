@@ -7,10 +7,10 @@
 | 通道 | 典型命令 / 入口 | 安装内容 | 适用 |
 |------|-----------------|----------|------|
 | **Git + install-skill** | `install-skill.sh analyze cursor` | 单个 skill + agent + references/scripts/templates | **按阶段试用/渐进安装** |
-| **Git + 安装脚本** | `install-framework-to-project.sh` | skills + agents + references + scripts + templates + rules | **全功能整包** |
+| **Git + 安装脚本** | `install-framework-to-project.sh` | skills + agents + references + scripts + templates | **全功能整包** |
 | **skills.sh** | `npx skills add <owner/repo>@analyze` | 通常单个 Skill 目录 | 发现、全局 skills 目录 |
 | **中立目录** | `install-framework-to-project.sh neutral` | `agent-workflow/` | Codex / 自定义 IDE 适配 |
-| **Cursor Marketplace** | IDE 内 Marketplace | skills + agents + rules（需再跑落地脚本） | Cursor 用户发现 |
+| **Cursor Marketplace** | IDE 内 Marketplace | skills + agents（需再跑落地脚本） | Cursor 用户发现 |
 
 详细 IDE 对照见 [cross-platform-deployment.md](cross-platform-deployment.md)。
 
@@ -18,21 +18,20 @@
 
 ## 推荐发布仓结构（IDE 中立）
 
-由导出脚本生成，**不要**与 iOS 业务仓混杂：
+由导出脚本生成，**不要**与业务应用源码混杂：
 
 ```bash
-bash .cursor/scripts/export-distribution-layout.sh /path/to/ios-agent-pipeline
+bash .cursor/scripts/export-distribution-layout.sh /path/to/agent-pipeline
 ```
 
 ```text
-ios-agent-pipeline/
+agent-pipeline/
 ├── framework.manifest.json
 ├── skills/              # analyze, plan, review, develop, test
 ├── agents/
 ├── references/
 ├── scripts/
 ├── templates/
-├── rules/
 ├── README.md
 └── .cursor-plugin/      # 可选：仅 Cursor Marketplace 通道
     └── plugin.json
@@ -46,8 +45,8 @@ ios-agent-pipeline/
 - 安装示例：
 
 ```bash
-npx skills add your-org/ios-agent-pipeline@analyze -g -y
-npx skills add your-org/ios-agent-pipeline@plan -g -y
+npx skills add your-org/agent-pipeline@analyze -g -y
+npx skills add your-org/agent-pipeline@plan -g -y
 ```
 
 - 发布要求：公开 Git 仓，`skills/<name>/SKILL.md` 符合 [Agent Skills 开放格式](https://skills.sh/)
@@ -63,16 +62,16 @@ npx skills add your-org/ios-agent-pipeline@plan -g -y
 **整包（默认）**
 
 ```bash
-git clone https://github.com/your-org/ios-agent-pipeline.git
-cd your-ios-app
-bash /path/to/ios-agent-pipeline/scripts/install-framework-to-project.sh all
+git clone https://github.com/your-org/agent-pipeline.git
+cd your-app
+bash /path/to/agent-pipeline/scripts/install-framework-to-project.sh all
 ```
 
 **单 skill + 共享 bundle**
 
 ```bash
-bash /path/to/ios-agent-pipeline/scripts/install-skill.sh analyze cursor
-bash /path/to/ios-agent-pipeline/scripts/install-skill.sh analyze plan develop cursor --init-agents
+bash /path/to/agent-pipeline/scripts/install-skill.sh analyze cursor
+bash /path/to/agent-pipeline/scripts/install-skill.sh analyze plan develop cursor --init-agents
 ```
 
 支持 `cursor` | `claude` | `codex` | `neutral` | `all`；`--skill` / `--skills` 也可直接写在 `install-framework-to-project.sh` 上。
@@ -85,13 +84,13 @@ bash /path/to/ios-agent-pipeline/scripts/install-skill.sh analyze plan develop c
 
 1. 使用 `export-distribution-layout.sh` 产出目录（含 `.cursor-plugin/plugin.json`）
 2. 推送到公开 Git 仓库
-3. 本地验证：`git clone ... ~/.cursor/plugins/local/ios-agent-pipeline`
+3. 本地验证：`git clone ... ~/.cursor/plugins/local/agent-pipeline`
 4. 提交 [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish)
 
 **注意**：Marketplace 安装后须在业务项目执行：
 
 ```bash
-bash /path/to/ios-agent-pipeline/scripts/install-framework-to-project.sh cursor
+bash /path/to/agent-pipeline/scripts/install-framework-to-project.sh cursor
 ```
 
 以补齐 `references/`、`scripts/`、`templates/`。

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 导出 IDE 中立 + 多通道可发布的分发目录（不含 iOS 业务代码）。
+# 导出 IDE 中立 + 多通道可发布的分发目录（不含业务应用源码）。
 #
 # 用法：
 #   bash .cursor/scripts/export-distribution-layout.sh <output-dir>
@@ -7,10 +7,10 @@
 # 产出 layout：
 #   <output-dir>/
 #   ├── framework.manifest.json
-#   ├── skills/ agents/ references/ scripts/ templates/ rules/
+#   ├── skills/ agents/ references/ scripts/ templates/
 #   ├── README.md
 #   ├── .cursor-plugin/plugin.json    # Cursor Marketplace 可选通道
-#   └── templates/project/AGENTS.md.template
+#   └── templates/project/AGENTS.md.example
 set -euo pipefail
 
 if [[ $# -lt 1 ]]; then
@@ -43,7 +43,7 @@ copy_tree() {
 }
 
 mkdir -p "$out_dir"
-for c in skills agents references scripts templates rules; do
+for c in skills agents references scripts templates; do
   copy_tree "$framework_src/$c" "$out_dir/$c"
 done
 
@@ -54,19 +54,18 @@ chmod +x "$out_dir/scripts/"*.sh 2>/dev/null || true
 mkdir -p "$out_dir/.cursor-plugin"
 cat > "$out_dir/.cursor-plugin/plugin.json" <<EOF
 {
-  "name": "ios-agent-pipeline",
+  "name": "agent-pipeline",
   "version": "${manifest_version}",
-  "description": "IDE-agnostic iOS agent pipeline (analyze → plan → review → develop → test). Install project bundle via scripts/install-framework-to-project.sh for full references/scripts.",
-  "keywords": ["ios", "agent", "pipeline", "workflow", "skills"],
+  "description": "IDE-agnostic software R&D agent pipeline (analyze → plan → review → develop → test). Install project bundle via scripts/install-framework-to-project.sh for full references/scripts.",
+  "keywords": ["agent", "pipeline", "workflow", "skills", "software"],
   "skills": "skills",
-  "agents": "agents",
-  "rules": "rules"
+  "agents": "agents"
 }
 EOF
 
 # 分发 README
 cat > "$out_dir/README.md" <<'EOF'
-# iOS Agent Pipeline（可移植工作流框架）
+# agent-pipeline（可移植工作流框架）
 
 IDE 中立 · 可安装到 Cursor / Claude Code / Codex / skills.sh
 
@@ -75,15 +74,15 @@ IDE 中立 · 可安装到 Cursor / Claude Code / Codex / skills.sh
 在**目标业务仓库根目录**：
 
 ```bash
-git clone <this-repo-url> /tmp/ios-agent-pipeline
-bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project.sh all
+git clone <this-repo-url> /tmp/agent-pipeline
+bash /tmp/agent-pipeline/scripts/install-framework-to-project.sh all
 # 或单通道：cursor | claude | codex | neutral
 ```
 
 全局 skills（Claude Code / Codex 可选）：
 
 ```bash
-INSTALL_GLOBAL=1 bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project.sh claude codex
+INSTALL_GLOBAL=1 bash /tmp/agent-pipeline/scripts/install-framework-to-project.sh claude codex
 ```
 
 ## skills.sh

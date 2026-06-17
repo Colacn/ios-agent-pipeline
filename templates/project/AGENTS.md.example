@@ -1,6 +1,6 @@
 # 仓库 Agent 指南（AGENTS）
 
-面向本仓库 **软件项目**：本文档是**项目层**总入口。**可移植流水线框架**为 IDE 中立包，默认落盘于 [`.cursor/`](.cursor/README.md)，亦可安装到 Claude Code / Codex / `agent-workflow/`（见 [跨 IDE 部署](.cursor/references/guide/cross-platform-deployment.md)）。
+面向本仓库 **软件项目**：本文档是**项目层**总入口。**可移植流水线框架**为 IDE 中立包，默认落盘于 `.cursor/`，亦可安装到 Claude Code / Codex / `agent-workflow/`（见 [跨 IDE 部署](.cursor/references/guide/cross-platform-deployment.md)）。
 
 文中路径与链接以 **`.cursor/`** 为前缀：这是本仓库存放协作规则、技能与脚本的**约定目录名**（与具体 IDE/厂商无关），从仓库根打开时链接可正确解析。  
 细分规则在 `.cursor/references/`；**完整 SOP 以 `.cursor/skills/` 为准**（如各 Skill 的 `references/execution-playbook.md`）。`.cursor/agents/` 仅作 **Subagent 薄入口**（路由到对应 Skill、便于隔离上下文），**不**再承载与 Skill 重复的长 SOP。  
@@ -108,7 +108,6 @@
 - 提交前先检查 diff。
 - 不要把密钥、本地专用路径、生成噪音或无关格式化改动放进 commit。
 - 提交时使用简洁、语义清晰的 commit message。
-- Git hooks 说明：[`.cursor/references/rules/git-hooks.md`](.cursor/references/rules/git-hooks.md)。
 
 ---
 
@@ -180,8 +179,7 @@
 
 ## 核心导航（30 秒上手）
 
-0. 框架自述（IDE 中立）：[`.cursor/README.md`](.cursor/README.md)
-0b. 跨 IDE 部署：[`.cursor/references/guide/cross-platform-deployment.md`](.cursor/references/guide/cross-platform-deployment.md)
+0. 跨 IDE 部署：[`.cursor/references/guide/cross-platform-deployment.md`](.cursor/references/guide/cross-platform-deployment.md)
 1. 仓库级稳定规则：[`.cursor/references/rules/stable-rules.md`](.cursor/references/rules/stable-rules.md)
 2. 复杂度分级与默认路由：[`.cursor/references/workflow/grading.md`](.cursor/references/workflow/grading.md)
 3. 流水线总规则（预处理/证据基线/跳步替代）：[`.cursor/references/workflow/pipeline.md`](.cursor/references/workflow/pipeline.md)
@@ -261,7 +259,8 @@ bash .cursor/scripts/install-framework-to-project.sh cursor --init-agents --over
 - `bash .cursor/scripts/ingest-external-to-inputs.sh [--move] <short-slug> <path...>`
 - `bash .cursor/scripts/record-urls-to-inputs.sh <short-slug> <url...>`
 - `bash .cursor/scripts/check-run.sh <short-slug>`（校验 outputs 命名与证据基线）
-- `bash .cursor/scripts/install-framework-to-project.sh [cursor|claude|codex|neutral|all] [--init-agents] [--overlay NAME] [--check]`
+- `bash .cursor/scripts/install-framework-to-project.sh [cursor|claude|codex|neutral|all] [--init-agents] [--overlay NAME] [--skill NAME] [--check]`
+- `bash .cursor/scripts/install-skill.sh <skill> [cursor|claude|...]`
 - `bash .cursor/scripts/export-distribution-layout.sh <dir>`（导出 IDE 中立发布包）
 
 ### 模板
@@ -277,7 +276,6 @@ bash .cursor/scripts/install-framework-to-project.sh cursor --init-agents --over
 ```text
 （仓库根，节选）
 ├── AGENTS.md
-├── setup-hooks.sh
 ├── .cursor/
 │   ├── agents/
 │   ├── skills/
@@ -292,16 +290,4 @@ bash .cursor/scripts/install-framework-to-project.sh cursor --init-agents --over
 runs/<short-slug>/
 ├── inputs/
 └── outputs/
-```
-
----
-
-## Git hooks（可选）
-
-详细说明与策略：[`.cursor/references/rules/git-hooks.md`](.cursor/references/rules/git-hooks.md)
-
-```bash
-bash setup-hooks.sh
-bash setup-hooks.sh --force
-bash setup-hooks.sh -h
 ```

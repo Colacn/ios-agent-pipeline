@@ -2,7 +2,7 @@
 # 将自研 Agent 工作流框架安装到目标项目（支持多 IDE 落盘路径）。
 #
 # 用法（在目标业务仓库根目录）：
-#   bash /path/to/ios-agent-pipeline/scripts/install-framework-to-project.sh [options] [target...]
+#   bash /path/to/agent-pipeline/scripts/install-framework-to-project.sh [options] [target...]
 #
 # target（可多个）：cursor | claude | codex | neutral | all
 #   默认：cursor
@@ -45,7 +45,7 @@ usage() {
 target: cursor | claude | codex | neutral | all  （默认 cursor）
 
 安装范围:
-  （默认）            整包：全部 skills + agents + references + scripts + templates + rules
+  （默认）            整包：全部 skills + agents + references + scripts + templates
   --skill NAME        单个或多个 skill + 最小共享 bundle（references/scripts/templates + 对应 agent）
   --skills A,B,C      同 --skill，逗号分隔
   --bundle            显式整包（覆盖 --skill）
@@ -199,8 +199,8 @@ install_to_dir() {
   [[ $DRY_RUN -eq 0 ]] && mkdir -p "$dest_root"
 
   if [[ "$INSTALL_MODE" == "bundle" ]]; then
-    log_action "    模式: 整包（全部 skills + rules）"
-    for c in skills agents references scripts templates rules; do
+    log_action "    模式: 整包（全部 skills + agents）"
+    for c in skills agents references scripts templates; do
       merge_component "$c" "$dest_root"
     done
   else

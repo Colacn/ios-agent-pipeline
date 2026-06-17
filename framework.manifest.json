@@ -1,15 +1,14 @@
 {
-  "name": "ios-agent-pipeline",
-  "version": "0.4.0",
-  "description": "IDE-agnostic document-driven agent pipeline: analyze → plan → review → develop → test. Portable skills + references + scripts + templates.",
+  "name": "agent-pipeline",
+  "version": "0.5.0",
+  "description": "IDE-agnostic document-driven agent pipeline for software R&D: analyze → plan → review → develop → test. Portable skills + references + scripts + templates.",
   "license": "MIT",
   "components": {
     "skills": "skills",
     "agents": "agents",
     "references": "references",
     "scripts": "scripts",
-    "templates": "templates",
-    "rules": "rules"
+    "templates": "templates"
   },
   "pipeline": ["analyze", "plan", "review", "develop", "test"],
   "outputs": {
@@ -23,7 +22,7 @@
     "cursor": {
       "projectDir": ".cursor",
       "projectGuide": "AGENTS.md",
-      "notes": "Cursor Marketplace plugin maps skills/agents/rules into .cursor/"
+      "notes": "Cursor Marketplace plugin maps skills/agents into .cursor/"
     },
     "claude-code": {
       "projectDir": ".claude",
@@ -52,7 +51,6 @@
       "test": "tester"
     },
     "sharedBundle": ["references", "scripts", "templates"],
-    "bundleOnly": ["rules"],
     "scripts": {
       "installSkill": "scripts/install-skill.sh",
       "installBundle": "scripts/install-framework-to-project.sh"

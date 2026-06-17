@@ -2,6 +2,23 @@
 
 本仓库遵循 [Semantic Versioning](https://semver.org/)。
 
+## [0.5.0] - 2026-06-16
+
+### Removed
+
+- **`PUBLISH.md`**：一次性个人发布笔记。
+- **`rules/*.mdc`**：误装入框架的 ObjC 业务 Cursor rules；整包安装不再复制 `rules/`。
+- **`references/rules/git-hooks.md`** 与 **`setup-hooks.sh`** 引用链（脚本从未提供）。
+- **`docs/SESSION-HANDOFF.md`**：与 README / references 重复的会话背景包。
+
+### Changed
+
+- 框架重命名为 **`agent-pipeline`**（面向通用软件研发，非 iOS 专用）。
+- `framework.manifest.json` / `.cursor-plugin/plugin.json` → v0.5.0；移除 `components.rules`。
+- develop/test agent 与 test skill 描述泛化（不再绑定 Objective-C/Swift）。
+- README、distribution、installation、AGENTS 模板等文档同步更新。
+- GitHub 仓库重命名为 **`Colacn/agent-pipeline`**（原 `ios-agent-pipeline`）。
+
 ## [0.4.0] - 2026-06-16
 
 ### Added

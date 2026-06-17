@@ -1,6 +1,6 @@
 ---
 name: test
-description: Use this skill when validating Objective-C/Swift changes after develop-stage delivery, including regression focus, release gating, and traceable test evidence. It outputs test reports or ledgers and supports AskQuestion-based issue intake for ambiguous or manual acceptance findings.
+description: Use this skill when validating code changes after develop-stage delivery, including regression focus, release gating, and traceable test evidence. It outputs test reports or ledgers and supports AskQuestion-based issue intake for ambiguous or manual acceptance findings.
 ---
 
 # Test

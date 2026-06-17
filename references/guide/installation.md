@@ -17,8 +17,8 @@
 bash .cursor/scripts/install-framework-to-project.sh all
 
 # 方式 B：从独立分发仓
-git clone <framework-repo> /tmp/ios-agent-pipeline
-cd your-app && bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project.sh cursor
+git clone <framework-repo> /tmp/agent-pipeline
+cd your-app && bash /tmp/agent-pipeline/scripts/install-framework-to-project.sh cursor
 ```
 
 | 方式 | 适用 |
@@ -34,16 +34,10 @@ cd your-app && bash /tmp/ios-agent-pipeline/scripts/install-framework-to-project
 创建或合并根目录 `AGENTS.md`（Claude Code 可用 `CLAUDE.md`）：
 
 - 链接到 `references/workflow/pipeline.md`、`grading.md`
-- 写本项目验证命令（如 xcodebuild）
+- 写本项目验证命令（如 `npm test`、`make check`、项目脚本）
 - **可选**：第三方 Agent 插件/skills 与流水线的优先级
 
-### 步骤 3：可选 hooks
-
-```bash
-bash setup-hooks.sh
-```
-
-### 步骤 4：冒烟验证
+### 步骤 3：冒烟验证
 
 ```bash
 bash .cursor/scripts/bootstrap-run.sh smoke-test    # 路径随 IDE 调整
