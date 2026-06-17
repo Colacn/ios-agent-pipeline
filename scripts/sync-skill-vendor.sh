@@ -39,6 +39,7 @@ copy_file "$root/references/workflow/light-task.md" "$a/references/workflow-ligh
 copy_file "$root/references/guide/skill-subagent.md" "$a/references/guide-skill-subagent.md"
 copy_file "$root/scripts/ingest-external-to-inputs.sh" "$a/scripts/ingest-external-to-inputs.sh"
 copy_file "$root/scripts/record-urls-to-inputs.sh" "$a/scripts/record-urls-to-inputs.sh"
+copy_file "$root/references/workflow/assumptions-protocol.md" "$a/references/assumptions-protocol.md"
 rm -f "$a/references/collaboration-discipline.md" \
   "$a/references/layering-appendix-a.md" \
   "$a/references/path-conventions.md" \
@@ -54,6 +55,7 @@ copy_file "$root/references/guide/layering.md" "$p/references/guide-layering.md"
 copy_file "$root/templates/vendor/layering-appendix-a.md" "$p/references/layering-appendix-a.md"
 copy_file "$root/templates/vendor/collaboration-discipline.md" "$p/references/collaboration-discipline.md"
 copy_tree "$root/templates/overlay" "$p/assets/overlay"
+copy_file "$root/references/workflow/plan-slicing.md" "$p/references/plan-slicing.md"
 rm -f "$p/references/path-conventions.md" \
   "$p/references/workflow-grading.md" \
   "$p/references/workflow-light-task.md" \
@@ -66,6 +68,7 @@ mkdir -p "$r/references" "$r/scripts/lib"
 install_common_scripts "$r"
 copy_file "$root/references/workflow/pipeline.md" "$r/references/workflow-pipeline.md"
 copy_file "$root/templates/vendor/layering-appendix-a.md" "$r/references/layering-appendix-a.md"
+copy_file "$root/references/workflow/review-discipline.md" "$r/references/review-discipline.md"
 rm -f "$r/references/collaboration-discipline.md" \
   "$r/references/path-conventions.md" \
   "$r/references/guide-layering.md" \
@@ -86,6 +89,7 @@ copy_file "$root/templates/developer-implementation-template.md" "$d/assets/deve
 copy_file "$root/scripts/reconcile-check.sh" "$d/scripts/reconcile-check.sh"
 copy_file "$root/scripts/check-run.sh" "$d/scripts/check-run.sh"
 copy_tree "$root/templates/overlay" "$d/assets/overlay"
+copy_file "$root/references/workflow/incremental-delivery.md" "$d/references/incremental-delivery.md"
 rm -f "$d/references/path-conventions.md" \
   "$d/references/guide-layering.md" \
   "$d/references/workflow-grading.md" \
@@ -99,6 +103,7 @@ install_common_scripts "$t"
 copy_file "$root/references/workflow/pipeline.md" "$t/references/workflow-pipeline.md"
 copy_file "$root/templates/vendor/layering-appendix-a.md" "$t/references/layering-appendix-a.md"
 copy_file "$root/scripts/check-run.sh" "$t/scripts/check-run.sh"
+copy_file "$root/references/workflow/test-discipline.md" "$t/references/test-discipline.md"
 rm -f "$t/references/collaboration-discipline.md" \
   "$t/references/path-conventions.md" \
   "$t/references/guide-layering.md" \

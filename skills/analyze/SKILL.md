@@ -4,7 +4,7 @@ description: Use this skill when the user needs intent clarification, ambiguity 
 compatibility: Requires bash and git in the business repository. Scripts live in this skill's scripts/ directory.
 metadata:
   author: agent-pipeline
-  version: "0.6.1"
+  version: "0.6.3"
 ---
 
 # Analyze
@@ -15,7 +15,7 @@ metadata:
 
 1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)（**优先通读**）。**走流水线**时：有外部依据则 [`scripts/bootstrap-run.sh`](scripts/bootstrap-run.sh) + ingest/record-urls；否则首次落盘前 bootstrap。
 2. **路由决策（首轮）**：按 [`references/workflow-grading.md`](references/workflow-grading.md) 判定 L0–L3；L1 轻量可不建 `runs/`；L2+ 或显式流水线入口须 bootstrap。
-3. 按 execution-playbook「输入源与解析范围」收拢信息。
+3. 按 execution-playbook「输入源与解析范围」收拢信息；**定稿前**按 [`references/assumptions-protocol.md`](references/assumptions-protocol.md) 显式列出假设与可测验收。
 4. 不确定时走「轮次 A — 待澄清」；确认后「轮次 B — 分析交付」。
 5. 流水线内口径歧义：**阻塞项未清不进 plan**。
 6. 写入仓库前按项目约定征得用户同意（若适用）。
@@ -33,6 +33,7 @@ metadata:
 
 ## On-demand references
 
+- `references/assumptions-protocol.md` — 假设显式化、边界三档
 - `references/playbook-map.md` — 流程与边界
 - `references/handoff-checklist.md` — 需求包交接
 - `references/execution-playbook.md` — 完整 SOP

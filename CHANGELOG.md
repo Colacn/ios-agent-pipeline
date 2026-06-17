@@ -2,6 +2,30 @@
 
 本仓库遵循 [Semantic Versioning](https://semver.org/)。
 
+## [0.6.3] - 2026-06-17
+
+### Added
+
+- 借鉴 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) 的五阶段 discipline references：`assumptions-protocol`、`plan-slicing`、`review-discipline`、`incremental-delivery`、`test-discipline`（canonical 在 `references/workflow/`，经 `sync-skill-vendor.sh` 分发）。
+- 对比留档：`reports/market-learning/comparisons/addyosmani-agent-skills-2026-06-17.md`。
+- `market-learning.manifest.json` watchlist 增加 `addyosmani/agent-skills`；`patternChecks` 增加反借口表/红旗检测。
+
+### Changed
+
+- 五阶段 `SKILL.md` → v0.6.3，Instructions 指向新 discipline references。
+
+## [0.6.2] - 2026-06-17
+
+### Added
+
+- **市场持续学习**：`scripts/market-learn.sh` + `market-learning.manifest.json` 轮询 skills.sh、采集 watchlist 样本、对比本仓五阶段并生成 `reports/market-learning/` backlog。
+- `.github/workflows/market-learning.yml` 每日自动运行并**开 PR**（人工审查合入，不直接 push main）。
+
+### Changed
+
+- 市场学习触发由每周改为**每天**；报告变更走 PR 流程而非直接提交主干。
+- [references/guide/market-learning.md](references/guide/market-learning.md) 迭代闭环说明。
+
 ## [0.6.1] - 2026-06-17
 
 ### Changed
