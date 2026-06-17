@@ -1,0 +1,68 @@
+scripts/sync-skill-vendor.sh
+  s_f02d2c73cb6dbc::t_f0a83d26da0b8f 42
+  s_f02d2c73cb6dbc::t_240a1b586f308f 92
+  s_f02d2c73cb6dbc::t_0ce7f5b44278ff 71
+  s_f02d2c73cb6dbc::t_4c9186823d09f3 106
+  s_f02d2c73cb6dbc::t_02f1d635606a63 58
+CHANGELOG.md
+  s_f02d2c73cb6dbc::t_88c8a108258a8f 17-21,27-28
+  s_f02d2c73cb6dbc::t_22ad43791b6176 22-26
+  s_f02d2c73cb6dbc::t_1aafc3a892d189 5-16
+references/workflow/assumptions-protocol.md
+  s_f02d2c73cb6dbc::t_8b0311696611cf 1-67
+references/workflow/plan-slicing.md
+  s_f02d2c73cb6dbc::t_1041e5f3437c48 1-75
+framework.manifest.json
+  s_f02d2c73cb6dbc::t_3c4d5babb19329 27-31,33,67-72,86-87
+  s_f02d2c73cb6dbc::t_4fd6674a226ba1 32
+  s_f02d2c73cb6dbc::t_31e131b4211781 3
+references/workflow/review-discipline.md
+  s_f02d2c73cb6dbc::t_3fca6c9614eaf1 1-63
+reports/market-learning/comparisons/addyosmani-agent-skills-2026-06-17.md
+  s_f02d2c73cb6dbc::t_2b1c867e3f38aa 1-43
+skills/plan/SKILL.md
+  s_f02d2c73cb6dbc::t_1723cd095c64dc 7
+  s_f02d2c73cb6dbc::t_8abfdb7e1c1e8f 25
+  s_f02d2c73cb6dbc::t_84e2be0821213b 21
+skills/analyze/SKILL.md
+  s_f02d2c73cb6dbc::t_7e03bfd1bf277c 7
+  s_f02d2c73cb6dbc::t_f26431cc731695 18
+  s_f02d2c73cb6dbc::t_f7711ba7d4e850 36
+skills/develop/SKILL.md
+  s_f02d2c73cb6dbc::t_3bb8f5eaf1ea6f 16
+  s_f02d2c73cb6dbc::t_7534e3550ffadf 22
+  s_f02d2c73cb6dbc::t_5840fc3b6ebf4c 7
+skills/test/SKILL.md
+  s_f02d2c73cb6dbc::t_08be0ae899fce4 24
+  s_f02d2c73cb6dbc::t_ce686260b83061 17
+  s_f02d2c73cb6dbc::t_7dc0a266618260 7
+skills/review/SKILL.md
+  s_f02d2c73cb6dbc::t_b029928e3b85af 17
+  s_f02d2c73cb6dbc::t_a8469424700eb6 23
+  s_f02d2c73cb6dbc::t_137319e7fa9a8d 7
+market-learning.manifest.json
+  s_f02d2c73cb6dbc::t_b693aca5fd3aaf 46-62
+  s_f02d2c73cb6dbc::t_1a0f94d931bf89 71-73
+  s_f02d2c73cb6dbc::t_02d76a081338b6 15
+  s_f02d2c73cb6dbc::t_ede21cdde02358 1-14,16-45,63-70,74-77
+references/workflow/incremental-delivery.md
+  s_f02d2c73cb6dbc::t_27dd402a5d8167 1-63
+references/workflow/test-discipline.md
+  s_f02d2c73cb6dbc::t_4493809d9761b1 1-50
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "a5a090d30f11b9f9cd7a96cccf102ffe559656b7",
+  "prompts": {},
+  "sessions": {
+    "s_f02d2c73cb6dbc": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "5885932b-cf6e-4f78-be74-69b3f4d7e833",
+        "model": "default"
+      },
+      "human_author": "lixiuwei <lixiuwei1121@gmail.com>"
+    }
+  }
+}
