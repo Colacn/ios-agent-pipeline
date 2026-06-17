@@ -1,6 +1,6 @@
 {
   "name": "agent-pipeline",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Document-driven agent pipeline for software R&D: analyze → plan → review → develop → test. Each skill is self-contained per Agent Skills spec (SKILL.md + references/ + scripts/ + assets/).",
   "license": "MIT",
   "components": {
@@ -57,7 +57,12 @@
       "develop": "developer",
       "test": "tester"
     },
-    "projectExtras": ["agents", "scripts/install-framework-to-project.sh", "scripts/install-skill.sh", "scripts/smoke-test.sh"],
+    "projectExtras": ["scripts/install-framework-to-project.sh", "scripts/install-skill.sh", "scripts/smoke-test.sh"],
+    "optionalAgents": {
+      "flag": "--with-agents",
+      "dir": "agents",
+      "notes": "Cursor Subagent thin routing; not part of Agent Skills spec"
+    },
     "legacyBundle": {
       "optionalFlag": "--with-legacy-bundle",
       "components": ["references", "scripts", "templates"],

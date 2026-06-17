@@ -1,6 +1,6 @@
 {
   "name": "agent-pipeline",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Self-contained Agent Skills pipeline (analyze → plan → review → develop → test). Install via npx skills add Colacn/agent-pipeline@analyze or install-framework-to-project.sh.",
   "keywords": ["agent", "pipeline", "workflow", "skills", "software", "agent-skills"],
   "skills": "skills",

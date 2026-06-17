@@ -4,45 +4,41 @@ description: Use this skill when the user needs intent clarification, ambiguity 
 compatibility: Requires bash and git in the business repository. Scripts live in this skill's scripts/ directory.
 metadata:
   author: agent-pipeline
-  version: "0.6.0"
+  version: "0.6.1"
 ---
 
 # Analyze
 
-**入口约定**：`analyze` 为本 Skill 名。主会话 **`/analyze`** 或子代理 `analyst` **均只按本文件与 execution-playbook 执行**。详见 [`references/guide-skill-subagent.md`](references/guide-skill-subagent.md)。
+**入口**：`analyze` 为本 Skill 名；部分 IDE（如 Cursor）可用子代理名 `analyst` 作隔离上下文入口，**SOP 仍以本文件为准**。见 [`references/guide-skill-subagent.md`](references/guide-skill-subagent.md)。
 
 ## Instructions
 
-1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)（**优先通读**）。**走流水线**时遵守项目根 `AGENTS.md`「流水线预处理」：有外部依据则 [`scripts/bootstrap-run.sh`](scripts/bootstrap-run.sh) + ingest/record-urls；否则首次落盘前 bootstrap。
-2. **路由决策（首轮）**：按 [`references/workflow-grading.md`](references/workflow-grading.md) 判定 L0–L3；L1 轻量通道可不建 `runs/`（见 execution-playbook「路由决策」）；L2+ 或用户显式流水线入口须 bootstrap 并落盘。
+1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)（**优先通读**）。**走流水线**时：有外部依据则 [`scripts/bootstrap-run.sh`](scripts/bootstrap-run.sh) + ingest/record-urls；否则首次落盘前 bootstrap。
+2. **路由决策（首轮）**：按 [`references/workflow-grading.md`](references/workflow-grading.md) 判定 L0–L3；L1 轻量可不建 `runs/`；L2+ 或显式流水线入口须 bootstrap。
 3. 按 execution-playbook「输入源与解析范围」收拢信息。
 4. 不确定时走「轮次 A — 待澄清」；确认后「轮次 B — 分析交付」。
-5. 流水线内口径歧义按「单题对齐协议」：**阻塞项未清不进 plan**。
-6. 写入仓库前须按项目 `AGENTS.md`「执行前确认」征得用户同意（若适用）。
-7. **流水线硬门禁**：项目根 `AGENTS.md` + [`references/workflow-pipeline.md`](references/workflow-pipeline.md)。
-8. **内容边界**：`analyze.requirements.md` 只写要什么 + 验收 + 范围；技术细节交给 **plan**。
-9. **需求清单体例**：极短标题 + 编号要点；不堆平台词；不引用不存在的旁路文件。
+5. 流水线内口径歧义：**阻塞项未清不进 plan**。
+6. 写入仓库前按项目约定征得用户同意（若适用）。
+7. **流水线硬门禁**：[`references/workflow-pipeline.md`](references/workflow-pipeline.md)（项目 `AGENTS.md` 若有则叠加）。
+8. **内容边界**：`analyze.requirements.md` 只写要什么 + 验收 + 范围；技术细节交给 **plan** skill。
+9. **需求清单体例**：极短标题 + 编号要点；不堆平台词。
 
-## Scripts（runs 工区，本 skill `scripts/`）
+## Scripts
 
 - [`scripts/bootstrap-run.sh`](scripts/bootstrap-run.sh)
 - [`scripts/ingest-external-to-inputs.sh`](scripts/ingest-external-to-inputs.sh)
 - [`scripts/record-urls-to-inputs.sh`](scripts/record-urls-to-inputs.sh)
 
-## On-demand references（按需读取）
+在业务仓库根目录执行；全局安装时路径为 `~/.agents/skills/analyze/scripts/` 或各 IDE 映射目录。
 
-- 需要完整分析流程、输出结构、禁止项时：读取 `references/playbook-map.md`
-- 用户明确要需求包或下游交接格式时：读取 `references/handoff-checklist.md`
-- 需要完整 SOP（流程/澄清/定稿/附录 A）时：读取 `references/execution-playbook.md`
-- 协作纪律：[`references/collaboration-discipline.md`](references/collaboration-discipline.md)
+## On-demand references
+
+- `references/playbook-map.md` — 流程与边界
+- `references/handoff-checklist.md` — 需求包交接
+- `references/execution-playbook.md` — 完整 SOP
+- `references/workflow-light-task.md` — L1 轻量通道
 
 ## When not to use
 
-- 用户要的是**写代码、出方案规划**（见 `develop` / `plan` Skill）。
-- 用户明确要**评审、拍板、给实施方案**（见 `review` 等 Skill，而非本 Skill 默认模式）。
-- 与项目/任务无关的闲聊。
-
-## Related rules
-
-- 项目根 `AGENTS.md`
-- [`references/path-conventions.md`](references/path-conventions.md)
+- 用户要**写代码、出方案**（见 `develop` / `plan` skill）。
+- 用户要**评审、拍板**（见 `review` skill）。

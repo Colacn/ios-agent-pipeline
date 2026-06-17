@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# 安装一个或多个 pipeline skill（skills.sh 风格）+ 最小共享 bundle。
+# 安装一个或多个 pipeline skill（skills.sh 风格）+ 项目工具脚本。
 #
 # 用法（在目标业务仓库根目录）：
 #   bash /path/to/agent-pipeline/scripts/install-skill.sh analyze [cursor]
-#   bash /path/to/agent-pipeline/scripts/install-skill.sh analyze plan develop claude --init-agents
+#   bash /path/to/agent-pipeline/scripts/install-skill.sh analyze --with-agents cursor
 #   bash /path/to/agent-pipeline/scripts/install-skill.sh --list
 #
 # 整包（全部 skills + agents）请用 install-framework-to-project.sh 或 --bundle。
@@ -32,6 +32,7 @@ options（转发至 install-framework-to-project.sh）:
   --overlay NAME      安装 project-overlays/NAME
   --check             安装后跑 smoke-test.sh
   --dry-run           预览，不写入
+  --with-agents       额外安装对应 agents/（Cursor Subagent，可选）
   --bundle            安装整包（全部 skills + rules），忽略前面列出的 SKILL
 
 示例:
@@ -64,6 +65,10 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     --with-legacy-bundle)
+      forward+=("$1")
+      shift
+      ;;
+    --with-agents)
       forward+=("$1")
       shift
       ;;

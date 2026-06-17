@@ -2,6 +2,14 @@
 
 本仓库遵循 [Semantic Versioning](https://semver.org/)。
 
+## [0.6.1] - 2026-06-17
+
+### Changed
+
+- **按阶段最小 vendoring**：`sync-skill-vendor.sh` 不再向五个 skill 复制相同附录；analyze 仅保留路由/预处理相关 references。
+- **agents 改为可选**：`install-framework-to-project.sh` / `install-skill.sh` 默认不装 `agents/`；`--with-agents` 安装 Cursor Subagent 薄路由。
+- SKILL.md 瘦身；`skill-subagent.md` 明确 skills.sh 为主路径、Subagent 为 Cursor 可选增强。
+
 ## [0.6.0] - 2026-06-17
 
 ### Changed

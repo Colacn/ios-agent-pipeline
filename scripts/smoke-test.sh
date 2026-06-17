@@ -36,7 +36,7 @@ git init -q
 bash "$framework_root/scripts/install-skill.sh" analyze cursor
 test -f .cursor/skills/analyze/SKILL.md
 test -f .cursor/skills/analyze/scripts/bootstrap-run.sh
-test -f .cursor/agents/analyst.md
+test ! -f .cursor/agents/analyst.md
 test ! -e .cursor/skills/plan/SKILL.md
 bash .cursor/skills/analyze/scripts/bootstrap-run.sh "${slug}-skill"
 test -d "$skill_tmp/runs/${slug}-skill/inputs"

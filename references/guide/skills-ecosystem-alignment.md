@@ -1,49 +1,42 @@
 # 与 skills.sh / Agent Skills 标准对照
 
-> 规范：[agentskills.io/specification](https://agentskills.io/specification) · 目录：[skills.sh/Colacn/agent-pipeline](https://skills.sh/Colacn/agent-pipeline)
+> 规范：[agentskills.io/specification](https://agentskills.io/specification)
 
-## 主流 skill 结构（本仓已对齐）
-
-```text
-skills/<name>/
-├── SKILL.md          # 必需：YAML frontmatter + 指令
-├── references/       # 按需加载（含 vendored workflow-pipeline.md 等）
-├── scripts/          # bootstrap-run、check-run …
-└── assets/           # 模板、overlay 脚手架（plan/develop）
-```
-
-**渐进式披露**：启动时 `name` + `description`；激活后 `SKILL.md`；细节在 `references/` / `scripts/` / `assets/`。
-
-## 安装（主流）
+## 主流安装（唯一必需）
 
 ```bash
-# 推荐：skills.sh CLI（需 Node.js / npx）
-npx skills add Colacn/agent-pipeline@analyze -a cursor -y
-npx skills add Colacn/agent-pipeline@plan -g -y
-
-# 备选：Git + bash（无 Node）
-bash /path/to/agent-pipeline/scripts/install-skill.sh analyze cursor
+npx skills add Colacn/agent-pipeline@analyze -y
 ```
 
-| 方式 | 得到什么 |
-|------|----------|
-| `npx skills add …@analyze` | **仅**自包含 `skills/analyze/` → 落盘到 `.cursor/skills/analyze/` 等 |
-| `install-skill.sh` | 同上 skill + 对应 agent + `.cursor/scripts/install-*.sh` |
-| `install-framework-to-project.sh` | 全部 5 skill + agents + 安装工具脚本 |
-| `--with-legacy-bundle` | 额外根级 `references/`、`scripts/`、`templates/`（旧布局） |
+落盘 `.agents/skills/analyze/`（skills CLI 统一目录）。**不含** `agents/`。
 
-## 维护者工作流
+## 单 skill 最小结构（v0.6.1+）
 
-1. 修改 canonical 源：`references/workflow/`、`scripts/`、`templates/vendor/`。
-2. 执行 `bash scripts/sync-skill-vendor.sh` 同步到 `skills/*/`.
-3. 提交 skill 目录变更（skills.sh 从 Git 拉取的是 `skills/<name>/`）。
+每阶段只 vendoring **本阶段必需** 的 references，不五份复制相同附录。
 
-## 跨 skill 引用
+```text
+skills/analyze/
+├── SKILL.md
+├── references/       # 仅 analyze 相关（pipeline、grading、playbook…）
+├── scripts/
+└── assets/             # 通常为空
+```
 
-主流模式**不**依赖 `../plan/SKILL.md` 等兄弟 skill。本仓将附录 A、协作纪律等 **vendored** 到各 skill 的 `references/`（`layering-appendix-a.md`、`collaboration-discipline.md`）。
+## 可选增强（非 skills.sh 标准）
 
-## 相关文档
+| 增强 | 命令 | 用途 |
+|------|------|------|
+| Cursor Subagent | `install-skill.sh analyze --with-agents` | `agents/analyst.md` 薄路由 |
+| 项目 AGENTS.md | `--init-agents` | 流水线总入口 |
+| 旧 bundle 布局 | `--with-legacy-bundle` | 根级 `references/scripts/templates` |
 
+## 维护
+
+1. 改 `references/workflow/`、`scripts/`、`templates/vendor/`
+2. `bash scripts/sync-skill-vendor.sh`（按阶段复制，非全量）
+3. 提交 `skills/*/`
+
+## 相关
+
+- [skill-subagent.md](skill-subagent.md) — Skill vs Subagent
 - [distribution.md](distribution.md)
-- [skill-subagent.md](skill-subagent.md)
-- [path-conventions.md](path-conventions.md)
