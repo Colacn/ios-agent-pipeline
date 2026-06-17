@@ -1,0 +1,60 @@
+skills/review/SKILL.md
+  s_f02d2c73cb6dbc::t_2411b464d5f50f 7,14,17-19,21,23-25,30
+skills/test/SKILL.md
+  s_f02d2c73cb6dbc::t_330af69e578ac1 7,14-16,18-20,22,24-26
+.cursor-plugin/plugin.json
+  s_f02d2c73cb6dbc::t_ef6dab0e1031db 3
+skills/analyze/SKILL.md
+  s_f02d2c73cb6dbc::t_ba98abf36ef41e 7,12,16-17,20-24,26,32,34,36-39,41,43-44
+scripts/sync-skill-vendor.sh
+  s_f02d2c73cb6dbc::t_28e542a45f2bb2 2-3,25-27,30,32,34-36,48,50-52,54-55,63-68,77,79-83,95,97-100,113
+  s_f02d2c73cb6dbc::t_fb41e884c24188 42-46,57-61,69-75,89-93,102-108
+scripts/install-framework-to-project.sh
+  s_f02d2c73cb6dbc::t_f88b544cae3144 14-15
+  s_f02d2c73cb6dbc::t_3b4ad4636e8337 110-113
+  s_f02d2c73cb6dbc::t_a2c6de24079bd6 244,246-249
+  s_f02d2c73cb6dbc::t_06b9d1c0f74b4d 417-418
+  s_f02d2c73cb6dbc::t_eb6c8f0010b2f3 52-53,56
+  s_f02d2c73cb6dbc::t_b2d1c3447eb4c7 256
+  s_f02d2c73cb6dbc::t_15bac92347ba2b 43
+  s_f02d2c73cb6dbc::t_89993ded35e493 208,211-215
+references/guide/skills-ecosystem-alignment.md
+  s_f02d2c73cb6dbc::t_a01c983fa49e61 3,5,7-8,11,13,15,17-22,25,27-31,33,35-37,39,41
+README.md
+  s_f02d2c73cb6dbc::t_61bb58c103ecdb 7,9,11-14,16,19-20,24,27,29,34,43,46,49,51-58,60,62-68,70,72,74-75
+scripts/smoke-test.sh
+  s_f02d2c73cb6dbc::t_a9fbe0e7273300 39
+scripts/install-skill.sh
+  s_f02d2c73cb6dbc::t_26e973c6f7ba3d 2,6
+  s_f02d2c73cb6dbc::t_d23b8e84b77460 35
+  s_f02d2c73cb6dbc::t_668b96ca850e06 71-74
+skills/develop/SKILL.md
+  s_f02d2c73cb6dbc::t_9ffac123656c51 7,14-18,29
+CHANGELOG.md
+  s_f02d2c73cb6dbc::t_93cae2d32c409e 5-12
+framework.manifest.json
+  s_f02d2c73cb6dbc::t_ebe71c631912f7 60-65
+  s_f02d2c73cb6dbc::t_f91b8cf1b0734a 3
+skills/plan/SKILL.md
+  s_f02d2c73cb6dbc::t_c53b50763666bd 7,14-20,25
+skills/analyze/references/guide-skill-subagent.md
+  s_f02d2c73cb6dbc::t_81400e661f4a04 1,3,5-7,9,11,13-15,17-23,25,27-28,30
+references/guide/skill-subagent.md
+  s_f02d2c73cb6dbc::t_5570bed4b40f7f 1,3,5-7,9,11,13-15,17-23,25,27-28,30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "59a368445cb318d9de76dd5d2a30e7193d0c4978",
+  "prompts": {},
+  "sessions": {
+    "s_f02d2c73cb6dbc": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "5885932b-cf6e-4f78-be74-69b3f4d7e833",
+        "model": "default"
+      },
+      "human_author": "lixiuwei <lixiuwei1121@gmail.com>"
+    }
+  }
+}
