@@ -1,0 +1,77 @@
+{
+  "version": "1",
+  "apiBase": "https://skills.sh/api/search",
+  "searchQueries": [
+    "pipeline",
+    "plan",
+    "review",
+    "brainstorming",
+    "tdd",
+    "code review",
+    "agent workflow"
+  ],
+  "minInstalls": 500,
+  "searchLimit": 12,
+  "harvestSearchResults": false,
+  "watchlist": [
+    {
+      "repo": "obra/superpowers",
+      "skills": [
+        "brainstorming",
+        "writing-plans",
+        "executing-plans",
+        "verification-before-completion",
+        "requesting-code-review",
+        "systematic-debugging",
+        "test-driven-development"
+      ],
+      "mapsTo": {
+        "brainstorming": "analyze",
+        "writing-plans": "plan",
+        "executing-plans": "develop",
+        "verification-before-completion": "test",
+        "requesting-code-review": "review",
+        "systematic-debugging": "test",
+        "test-driven-development": "develop"
+      }
+    },
+    {
+      "repo": "mattpocock/skills",
+      "skills": ["to-prd", "tdd", "triage"],
+      "mapsTo": {
+        "to-prd": "plan",
+        "tdd": "develop",
+        "triage": "analyze"
+      }
+    },
+    {
+      "repo": "addyosmani/agent-skills",
+      "skills": [
+        "spec-driven-development",
+        "planning-and-task-breakdown",
+        "code-review-and-quality",
+        "incremental-implementation",
+        "test-driven-development"
+      ],
+      "mapsTo": {
+        "spec-driven-development": "analyze",
+        "planning-and-task-breakdown": "plan",
+        "code-review-and-quality": "review",
+        "incremental-implementation": "develop",
+        "test-driven-development": "test"
+      }
+    }
+  ],
+  "localStages": ["analyze", "plan", "review", "develop", "test"],
+  "patternChecks": [
+    { "id": "hard_gate", "regex": "HARD-GATE|<HARD-GATE>", "label": "硬门禁块" },
+    { "id": "when_not", "regex": "## When not to use", "label": "When not to use" },
+    { "id": "checklist", "regex": "## Checklist|^- \\[ \\]", "label": "可勾选清单" },
+    { "id": "compatibility", "regex": "^compatibility:", "label": "frontmatter compatibility" },
+    { "id": "on_demand_refs", "regex": "On-demand references|references/", "label": "按需 references" },
+    { "id": "rationalizations", "regex": "常见借口|Common Rationalizations", "label": "反借口表" },
+    { "id": "red_flags", "regex": "## 红旗|## Red Flags", "label": "红旗清单" }
+  ],
+  "reportDir": "reports/market-learning",
+  "cacheDir": ".market-learning/cache"
+}

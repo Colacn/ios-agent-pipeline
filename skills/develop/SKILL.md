@@ -4,7 +4,7 @@ description: Use when implementing approved changes with minimal diff, layered c
 compatibility: Requires bash and git in the business repository.
 metadata:
   author: agent-pipeline
-  version: "0.6.1"
+  version: "0.6.3"
 ---
 
 # Develop
@@ -13,12 +13,13 @@ metadata:
 
 1. 完整执行规范见 [`references/execution-playbook.md`](references/execution-playbook.md)。落盘前执行 [`scripts/bootstrap-run.sh`](scripts/bootstrap-run.sh) `<slug>`（若尚无工区）。
 2. **分层**：[`references/layering-appendix-a.md`](references/layering-appendix-a.md) + overlay `project-overlays/*/appendix-a-layers.md`。
-3. **协作与质量**：[`references/collaboration-discipline.md`](references/collaboration-discipline.md)。
+3. **协作与质量**：[`references/collaboration-discipline.md`](references/collaboration-discipline.md)；增量与范围见 [`references/incremental-delivery.md`](references/incremental-delivery.md)。
 4. **流水线**：[`references/workflow-pipeline.md`](references/workflow-pipeline.md)。
 5. **出口（强制）**：落盘 `developer.implementation.md` → reconcile-docs。模板 [`assets/developer-implementation-template.md`](assets/developer-implementation-template.md)。建议 `bash scripts/reconcile-check.sh <slug>`。
 
 ## On-demand references
 
+- `references/incremental-delivery.md` — 切片、范围纪律、验证节奏
 - `references/execution-gate.md`
 - `references/delivery-checklist.md`
 - `references/execution-playbook.md`

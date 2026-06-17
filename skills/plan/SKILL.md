@@ -4,7 +4,7 @@ description: Use when turning analyze outputs into reviewable technical plans wi
 compatibility: Requires bash and git in the business repository.
 metadata:
   author: agent-pipeline
-  version: "0.6.1"
+  version: "0.6.3"
 ---
 
 # Plan（方案规划）
@@ -18,9 +18,11 @@ metadata:
 5. **输入/输出**：来自 `analyze`；面向 `review` 与 `develop`。
 6. **内容边界**：`plan.solution.md` 负责落层、设计决策、实现路径；需求清单在 `analyze.requirements.md`。
 7. **极简需求清单**：须 **§0 对表索引** + 正文可验收细则（见 execution-playbook）。
+8. **任务切片**：按 [`references/plan-slicing.md`](references/plan-slicing.md) 写纵向切片、粒度与 Checkpoint。
 
 ## On-demand references
 
+- `references/plan-slicing.md` — 纵向切片与任务粒度
 - `references/plan-checklist.md`
 - `references/risk-gate.md`
 - `references/execution-playbook.md`

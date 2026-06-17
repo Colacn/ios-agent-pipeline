@@ -1,6 +1,6 @@
 {
   "name": "agent-pipeline",
-  "version": "0.6.1",
+  "version": "0.6.3",
   "description": "Document-driven agent pipeline for software R&D: analyze → plan → review → develop → test. Each skill is self-contained per Agent Skills spec (SKILL.md + references/ + scripts/ + assets/).",
   "license": "MIT",
   "components": {
@@ -23,6 +23,13 @@
     "selfContained": true,
     "perSkill": ["SKILL.md", "references/", "scripts/", "assets/"],
     "syncScript": "scripts/sync-skill-vendor.sh"
+  },
+  "marketLearning": {
+    "manifest": "market-learning.manifest.json",
+    "script": "scripts/market-learn.sh",
+    "reportDir": "reports/market-learning",
+    "schedule": ".github/workflows/market-learning.yml",
+    "notes": "Daily PR via market-learning.yml; human merges report-only changes"
   },
   "installTargets": {
     "cursor": {
@@ -57,7 +64,12 @@
       "develop": "developer",
       "test": "tester"
     },
-    "projectExtras": ["scripts/install-framework-to-project.sh", "scripts/install-skill.sh", "scripts/smoke-test.sh"],
+    "projectExtras": [
+      "scripts/install-framework-to-project.sh",
+      "scripts/install-skill.sh",
+      "scripts/smoke-test.sh",
+      "scripts/market-learn.sh"
+    ],
     "optionalAgents": {
       "flag": "--with-agents",
       "dir": "agents",
@@ -71,7 +83,8 @@
     "scripts": {
       "installSkill": "scripts/install-skill.sh",
       "installBundle": "scripts/install-framework-to-project.sh",
-      "syncVendor": "scripts/sync-skill-vendor.sh"
+      "syncVendor": "scripts/sync-skill-vendor.sh",
+      "marketLearn": "scripts/market-learn.sh"
     }
   },
   "distribution": {
